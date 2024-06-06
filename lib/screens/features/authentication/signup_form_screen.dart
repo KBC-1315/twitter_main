@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/screens/features/authentication/customize_screen.dart';
+import 'package:tictok_clone/screens/features/authentication/onboarding/verification_screen.dart';
 import 'package:tictok_clone/screens/features/authentication/widgets/auth_button.dart';
 import 'package:tictok_clone/screens/features/authentication/widgets/form_button.dart';
 import 'package:tictok_clone/screens/features/authentication/widgets/text_span_with_link.dart';
@@ -145,6 +146,20 @@ class _SignupFormScreenState extends State<SignupFormScreen> {
       _showDatepicker = false;
     });
     FocusScope.of(context).unfocus();
+  }
+
+  void _onSignupTap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VerificationScreen(
+          name: _name,
+          birthday: _birthday,
+          email: _contact,
+          contact: _contact,
+        ),
+      ),
+    );
   }
 
   @override
@@ -372,11 +387,14 @@ class _SignupFormScreenState extends State<SignupFormScreen> {
                         ),
                       ),
                       Gaps.v20,
-                      const AuthButton(
-                          text: "Sign up",
-                          icon: FaIcon(FontAwesomeIcons.a, size: 0),
-                          backgroundColor: Colors.blue,
-                          textColor: Colors.white),
+                      GestureDetector(
+                        onTap: _onSignupTap,
+                        child: const AuthButton(
+                            text: "Sign up",
+                            icon: FaIcon(FontAwesomeIcons.a, size: 0),
+                            backgroundColor: Colors.blue,
+                            textColor: Colors.white),
+                      ),
                     ],
                   ),
                 ),
