@@ -6,6 +6,7 @@ import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/screens/features/authentication/onboarding/finish_screen.dart';
 import 'package:tictok_clone/screens/features/authentication/onboarding/interest_screen.dart';
 import 'package:tictok_clone/screens/features/authentication/onboarding/widgets/initerst_button.dart';
+import 'package:tictok_clone/screens/features/main_navigation/main_navigation_screen.dart';
 
 enum Direction { right, left }
 
@@ -144,8 +145,9 @@ class _InterestScreenState extends State<InterestScreen> {
 
   void _onfinalNextButtonPressed() {
     if ((_selectedEntertain.length + _selectedMusics.length) >= 3) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const FinishScreen()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
+          (route) => false);
     }
   }
 
