@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone/screens/features/main_navigation/home_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/post_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -22,12 +23,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: [
+        children: const [
           HomeScreen(),
-          const PlaceholderWidget("Search"),
-          const PlaceholderWidget("Post"),
-          const PlaceholderWidget("Notifications"),
-          const PlaceholderWidget("Profile"),
+          PlaceholderWidget("Search"),
+          PostScreen(),
+          PlaceholderWidget("Notifications"),
+          PlaceholderWidget("Profile"),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

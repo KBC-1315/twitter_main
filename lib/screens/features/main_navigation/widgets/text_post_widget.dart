@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
+import 'package:tictok_clone/screens/features/main_navigation/detail_view_screen.dart';
 
 enum PostType { text, image }
 
@@ -26,10 +27,22 @@ class Post {
   });
 }
 
-class TextPostWidget extends StatelessWidget {
+class TextPostWidget extends StatefulWidget {
   final Post post;
-
   const TextPostWidget({super.key, required this.post});
+
+  @override
+  State<TextPostWidget> createState() => _TextPostWidgetState();
+}
+
+class _TextPostWidgetState extends State<TextPostWidget> {
+  void _onThreeDotTap(BuildContext context) async {
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) => const DetailViewScreen());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,40 +56,19 @@ class TextPostWidget extends StatelessWidget {
         ),
         Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 11,
-                horizontal: 15,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    post.duration,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  Gaps.h10,
-                  const Icon(Icons.more_horiz),
-                ],
-              ),
-            ),
             ListTile(
               leading: const CircleAvatar(
                 backgroundImage: AssetImage('assets/user_placeholder.png'),
               ),
               title: Text(
-                post.user,
+                widget.post.user,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               subtitle: Text(
-                post.text,
+                widget.post.text,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -99,6 +91,30 @@ class TextPostWidget extends StatelessWidget {
                   color: Colors.black,
                   size: 19,
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 11,
+                horizontal: 15,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    widget.post.duration,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Gaps.h10,
+                  GestureDetector(
+                    onTap: () => _onThreeDotTap(context),
+                    child: const Icon(Icons.more_horiz),
+                  ),
+                ],
               ),
             ),
           ],
@@ -195,7 +211,7 @@ class TextPostWidget extends StatelessWidget {
               ),
               Gaps.h10,
               Text(
-                '${post.replies} replies • ${post.likes} likes',
+                '${widget.post.replies} replies • ${widget.post.likes} likes',
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontSize: 14,
