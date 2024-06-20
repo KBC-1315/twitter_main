@@ -91,51 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.all(Sizes.size2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              NavTab(
-                text: "Home",
-                isSelected: _selectedIndex == 0,
-                icon: FontAwesomeIcons.house,
-                selectedIcon: FontAwesomeIcons.house,
-                onTap: () => _onTap(0),
-              ),
-              NavTab(
-                text: "Discover",
-                isSelected: _selectedIndex == 1,
-                icon: FontAwesomeIcons.compass,
-                selectedIcon: FontAwesomeIcons.solidCompass,
-                onTap: () => _onTap(1),
-              ),
-              Gaps.h24,
-              GestureDetector(
-                onTap: _onNewPostTap,
-                child: const PostVideoButton(),
-              ),
-              Gaps.h24,
-              NavTab(
-                text: "Inbox",
-                isSelected: _selectedIndex == 3,
-                icon: FontAwesomeIcons.message,
-                selectedIcon: FontAwesomeIcons.solidMessage,
-                onTap: () => _onTap(3),
-              ),
-              NavTab(
-                text: "Profile",
-                isSelected: _selectedIndex == 4,
-                icon: FontAwesomeIcons.user,
-                selectedIcon: FontAwesomeIcons.solidUser,
-                onTap: () => _onTap(4),
-              ),
-            ],
-          ),
-        ),
-      ),
       body: Column(
         children: [
           const Padding(

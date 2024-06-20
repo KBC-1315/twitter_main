@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tictok_clone/screens/features/main_navigation/activity_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/home_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/post_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/profile_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/widgets/search_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -18,17 +21,26 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
+  void _onNewPostTap(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (context) => const PostScreen(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: const [
-          HomeScreen(),
-          PlaceholderWidget("Search"),
-          PostScreen(),
-          PlaceholderWidget("Notifications"),
-          PlaceholderWidget("Profile"),
+      body: Stack(
+        children: [
+          Offstage(offstage: _selectedIndex != 0, child: const HomeScreen()),
+          Offstage(offstage: _selectedIndex != 1, child: const SearchScreen()),
+          Offstage(
+              offstage: _selectedIndex != 3, child: const ActivityScreen()),
+          Offstage(
+              offstage: _selectedIndex != 4, child: const UserProfileScreen()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -50,7 +62,10 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             backgroundColor: Colors.blue[100],
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.add_circle_outline),
+            icon: GestureDetector(
+              onTap: () => _onNewPostTap(context),
+              child: const Icon(Icons.add_circle_outline),
+            ),
             label: "Post",
             backgroundColor: Colors.green[100],
           ),

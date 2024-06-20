@@ -1,4 +1,11 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:gallery_saver/gallery_saver.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 
 class PostScreen extends StatefulWidget {
@@ -9,6 +16,29 @@ class PostScreen extends StatefulWidget {
 }
 
 class _PostScreenState extends State<PostScreen> {
+  File? _selectedImage;
+
+  Future<void> takePhoto() async {
+    final photo = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (photo == null || !mounted) return;
+
+    setState(() {
+      _selectedImage = File(photo.path);
+    });
+    await GallerySaver.saveImage(photo.path);
+  }
+
+  Future<void> selectPhoto() async {
+    final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (photo == null || !mounted) return;
+
+    setState(() {
+      _selectedImage = File(photo.path);
+    });
+  }
+
   final TextEditingController _textController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final GlobalKey _textFieldKey = GlobalKey();
@@ -101,15 +131,6 @@ class _PostScreenState extends State<PostScreen> {
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        // Container를 사용해 적절한 높이로 감싸서 VerticalDivider가 보이도록 합니다.
-                        SizedBox(
-                          height: textFieldHeight,
-                          child: const VerticalDivider(
-                            width: 1, // Divider의 두께
-                            thickness: 2, // Divider의 두께
-                            color: Colors.grey, // Divider의 색상
-                          ),
-                        ),
                         const SizedBox(width: 10),
                         Expanded(
                           child: Column(
@@ -129,12 +150,47 @@ class _PostScreenState extends State<PostScreen> {
                                   updateHeight();
                                 },
                               ),
-                              const Row(
+                              Row(
                                 children: [
-                                  SizedBox(width: 10),
-                                  Icon(
-                                    Icons.crop_original_sharp,
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: selectPhoto,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          color: Colors.black,
+                                          shape: BoxShape.circle),
+                                      padding: const EdgeInsets.all(5),
+                                      child: const Icon(
+                                        color: Colors.white,
+                                        Icons.crop_original_sharp,
+                                      ),
+                                    ),
                                   ),
+                                  Gaps.h20,
+                                  GestureDetector(
+                                    onTap: takePhoto,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black),
+                                      padding: const EdgeInsets.all(5),
+                                      child: const Icon(
+                                        color: Colors.white,
+                                        Icons.camera_alt_outlined,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Gaps.v28,
+                              Row(
+                                children: [
+                                  if (_selectedImage != null)
+                                    Image.file(
+                                      _selectedImage!,
+                                      height: 200,
+                                      fit: BoxFit.cover,
+                                    ),
                                 ],
                               ),
                             ],
