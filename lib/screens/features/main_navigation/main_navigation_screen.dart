@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/screens/features/main_navigation/activity_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/home_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/post_screen.dart';
@@ -15,10 +16,23 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIndex = 0;
 
+  static const List<String> _tabs = [
+    "/",
+    "/search",
+    "/post",
+    "/activity",
+    "/profile"
+  ];
+
   void _onTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index == 2) {
+      _onNewPostTap(context);
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+      context.go(_tabs[index]);
+    }
   }
 
   void _onNewPostTap(BuildContext context) async {
@@ -81,19 +95,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class PlaceholderWidget extends StatelessWidget {
-  final String text;
-
-  const PlaceholderWidget(this.text, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(text),
     );
   }
 }

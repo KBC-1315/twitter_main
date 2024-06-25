@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/router.dart';
 import 'package:tictok_clone/screens/features/authentication/sign_up_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/home_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/main_navigation_screen.dart';
 
 void main() {
+  GoRouter.optionURLReflectsImperativeAPIs = true;
   runApp(const MyApp());
 }
 
@@ -14,7 +17,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Flutter Demo',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -30,7 +34,6 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MainNavigationScreen(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/screens/features/main_navigation/detail_view_screen.dart';
@@ -18,9 +19,8 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  void _onSettingTap(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const SettingScreen()));
+  void _onSettingTap() {
+    context.push("/setting");
   }
 
   void _onThreeDotTap() {
@@ -169,7 +169,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => _onSettingTap(context),
+                    onPressed: () => _onSettingTap(),
                     icon: const FaIcon(
                       FontAwesomeIcons.gear,
                       size: 25,

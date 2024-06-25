@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/screens/features/main_navigation/privacy_screen.dart';
 
@@ -43,9 +44,8 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  void _onPrivacyTap(BuildContext context) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const PrivacyScreen()));
+  void _onPrivacyTap() {
+    context.push("/setting/privacy");
   }
 
   final List<Map<String, dynamic>> _tabs = [
@@ -63,8 +63,7 @@ class _SettingScreenState extends State<SettingScreen> {
       "title": "Privacy",
       "icon": FontAwesomeIcons.lock,
       "onTap": (BuildContext context) {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const PrivacyScreen()));
+        context.push("/setting/privacy");
       }
     },
     {"title": "Account", "icon": FontAwesomeIcons.solidUser, "onTap": () {}},
