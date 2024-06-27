@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/screens/features/authentication/customize_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/signup_form_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/sign_up_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/widgets/auth_button.dart';
-import 'package:tictok_clone/screens/features/authentication/widgets/email_screen.dart';
+import 'package:tictok_clone/screens/authentication/customize_screen.dart';
+import 'package:tictok_clone/screens/authentication/signup_form_screen.dart';
+import 'package:tictok_clone/screens/authentication/sign_up_screen.dart';
+import 'package:tictok_clone/screens/authentication/widgets/auth_button.dart';
+import 'package:tictok_clone/screens/authentication/widgets/email_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CustomizeScreen(),
+        builder: (context) => const CustomizeScreen(),
       ),
     );
   }

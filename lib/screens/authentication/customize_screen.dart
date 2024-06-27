@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/screens/features/authentication/cookie_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/login.dart';
-import 'package:tictok_clone/screens/features/authentication/privacy_policy_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/signup_form_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/term_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/widgets/auth_button.dart';
-import 'package:tictok_clone/screens/features/authentication/username_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/widgets/text_span_with_link.dart';
+import 'package:tictok_clone/screens/authentication/cookie_screen.dart';
+import 'package:tictok_clone/screens/authentication/login.dart';
+import 'package:tictok_clone/screens/authentication/privacy_policy_screen.dart';
+import 'package:tictok_clone/screens/authentication/signup_form_screen.dart';
+import 'package:tictok_clone/screens/authentication/term_screen.dart';
+import 'package:tictok_clone/screens/authentication/widgets/auth_button.dart';
+import 'package:tictok_clone/screens/authentication/username_screen.dart';
+import 'package:tictok_clone/screens/authentication/widgets/text_span_with_link.dart';
 
 class CustomizeScreen extends StatefulWidget {
   final String? name;

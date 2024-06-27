@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/router.dart';
-import 'package:tictok_clone/screens/features/authentication/sign_up_screen.dart';
+import 'package:tictok_clone/screens/authentication/sign_up_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/home_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/main_navigation_screen.dart';
 

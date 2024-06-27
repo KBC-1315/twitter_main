@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/screens/features/authentication/customize_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/onboarding/verification_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/widgets/auth_button.dart';
-import 'package:tictok_clone/screens/features/authentication/widgets/form_button.dart';
-import 'package:tictok_clone/screens/features/authentication/widgets/text_span_with_link.dart';
+import 'package:tictok_clone/screens/authentication/customize_screen.dart';
+import 'package:tictok_clone/screens/authentication/onboarding/verification_screen.dart';
+import 'package:tictok_clone/screens/authentication/widgets/auth_button.dart';
+import 'package:tictok_clone/screens/authentication/widgets/form_button.dart';
+import 'package:tictok_clone/screens/authentication/widgets/text_span_with_link.dart';
 
 // ignore: must_be_immutable
 class SignupFormScreen extends StatefulWidget {

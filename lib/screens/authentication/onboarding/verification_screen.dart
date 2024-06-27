@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tictok_clone/screens/features/authentication/onboarding/password_screen.dart';
+import 'package:tictok_clone/screens/authentication/onboarding/password_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   final String email;

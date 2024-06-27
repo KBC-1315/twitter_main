@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/screens/features/authentication/onboarding/finish_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/onboarding/interest_screen.dart';
-import 'package:tictok_clone/screens/features/authentication/onboarding/widgets/initerst_button.dart';
+import 'package:tictok_clone/screens/authentication/onboarding/finish_screen.dart';
+import 'package:tictok_clone/screens/authentication/onboarding/interest_screen.dart';
+import 'package:tictok_clone/screens/authentication/onboarding/widgets/initerst_button.dart';
 import 'package:tictok_clone/screens/features/main_navigation/main_navigation_screen.dart';
 
 enum Direction { right, left }
