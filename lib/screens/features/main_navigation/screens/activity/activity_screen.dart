@@ -66,7 +66,10 @@ class _ActivityScreenState extends State<ActivityScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Activity',
-            style: TextStyle(fontWeight: FontWeight.bold)),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+            )),
       ),
       body: Column(
         children: [

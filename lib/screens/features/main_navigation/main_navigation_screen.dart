@@ -5,6 +5,7 @@ import 'package:tictok_clone/screens/features/main_navigation/screens/home/home_
 import 'package:tictok_clone/screens/features/main_navigation/screens/post/post_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/profile/profile_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/search/search_screen.dart';
+import 'package:tictok_clone/utils.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -62,18 +63,22 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         showUnselectedLabels: false,
         currentIndex: _selectedIndex,
         onTap: _onTap,
-        selectedItemColor: Colors.black,
+        selectedItemColor: !isDarkMode(context) ? Colors.black : Colors.white,
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.home),
             label: "Home",
-            backgroundColor: Colors.amber[50],
+            backgroundColor: !isDarkMode(context)
+                ? Colors.amber[50]
+                : const Color(0xFF333300),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.search),
             label: "Search",
-            backgroundColor: Colors.blue[100],
+            backgroundColor: !isDarkMode(context)
+                ? Colors.blue[100]
+                : const Color(0xFF003366),
           ),
           BottomNavigationBarItem(
             icon: GestureDetector(
@@ -81,17 +86,23 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               child: const Icon(Icons.add_circle_outline),
             ),
             label: "Post",
-            backgroundColor: Colors.green[100],
+            backgroundColor: !isDarkMode(context)
+                ? Colors.green[100]
+                : const Color(0xFF003300),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.notifications),
             label: "Notifications",
-            backgroundColor: Colors.purple[100],
+            backgroundColor: !isDarkMode(context)
+                ? Colors.purple[100]
+                : const Color(0xFF4B0082),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
             label: "Profile",
-            backgroundColor: Colors.lightBlue[300],
+            backgroundColor: !isDarkMode(context)
+                ? Colors.lightBlue[300]
+                : const Color(0xFF003366),
           ),
         ],
       ),

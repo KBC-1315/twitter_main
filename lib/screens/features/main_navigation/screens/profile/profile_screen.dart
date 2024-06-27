@@ -10,6 +10,7 @@ import 'package:tictok_clone/screens/features/main_navigation/screens/profile/se
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/image_post_widget.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/profile/widgets/persistent_tabbar.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/text_post_widget.dart';
+import 'package:tictok_clone/utils.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -207,14 +208,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 5),
                                   decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
+                                      color: !isDarkMode(context)
+                                          ? Colors.grey.shade200
+                                          : Colors.grey,
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10))),
                                   child: Text(
                                     "threads.net",
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
-                                      color: Colors.grey.shade500,
+                                      color: !isDarkMode(context)
+                                          ? Colors.grey.shade500
+                                          : Colors.white,
                                     ),
                                   ),
                                 )
@@ -234,8 +239,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                   ),
                   Gaps.v12,
-                  const Padding(
-                    padding: EdgeInsets.symmetric(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 20,
                     ),
                     child: Row(
@@ -245,7 +250,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           "Plant enthusiast!",
                           style: TextStyle(
                             fontSize: 20,
-                            color: Colors.black,
+                            color: !isDarkMode(context)
+                                ? Colors.black
+                                : Colors.white,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -272,8 +279,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 top: 0,
                                 child: Container(
                                   padding: const EdgeInsets.all(2),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
+                                  decoration: BoxDecoration(
+                                    color: !isDarkMode(context)
+                                        ? Colors.white
+                                        : Colors.black,
                                     shape: BoxShape.circle,
                                   ),
                                   child: const CircleAvatar(
@@ -288,8 +297,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 top: 0, // 첫 번째 CircleAvatar에 비해 오른쪽으로 이동
                                 child: Container(
                                   padding: const EdgeInsets.all(2),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
+                                  decoration: BoxDecoration(
+                                    color: !isDarkMode(context)
+                                        ? Colors.white
+                                        : Colors.black,
                                     shape: BoxShape.circle,
                                   ),
                                   child: const CircleAvatar(
@@ -329,16 +340,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               vertical: Sizes.size12,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: !isDarkMode(context)
+                                  ? Colors.white
+                                  : Colors.black,
                               border: Border.all(color: Colors.grey, width: 1),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(6),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'Edit profile',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: !isDarkMode(context)
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 18,
                               ),
@@ -354,16 +369,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               vertical: Sizes.size12,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: !isDarkMode(context)
+                                  ? Colors.white
+                                  : Colors.black,
                               border: Border.all(color: Colors.grey, width: 1),
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(6),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'Share profile',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: !isDarkMode(context)
+                                    ? Colors.black
+                                    : Colors.white,
                                 fontWeight: FontWeight.w700,
                                 fontSize: 18,
                               ),

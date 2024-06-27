@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/text_post_widget.dart';
+import 'package:tictok_clone/utils.dart';
 
 class ImagePostWidget extends StatefulWidget {
   final Post post;
@@ -26,8 +27,8 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Divider(
-          color: Colors.grey,
+        Divider(
+          color: !isDarkMode(context) ? Colors.grey : Colors.white,
           thickness: 1.0,
           height: 3.0,
         ),
@@ -59,13 +60,13 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                 height: 19,
                 width: 19,
                 padding: const EdgeInsets.all(0.1),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+                decoration: BoxDecoration(
+                  color: !isDarkMode(context) ? Colors.white : Colors.black,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.add_circle,
-                  color: Colors.black,
+                  color: !isDarkMode(context) ? Colors.black : Colors.white,
                   size: 19,
                 ),
               ),
@@ -80,10 +81,10 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                 children: [
                   Text(
                     widget.post.duration,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: Colors.grey,
+                      color: !isDarkMode(context) ? Colors.grey : Colors.white,
                     ),
                   ),
                   Gaps.h10,
@@ -118,15 +119,18 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
               Gaps.h20,
               Gaps.h24,
               IconButton(
-                icon: const Icon(Icons.favorite_border, color: Colors.black),
+                icon: Icon(Icons.favorite_border,
+                    color: !isDarkMode(context) ? Colors.black : Colors.white),
                 onPressed: () {},
               ),
               IconButton(
-                icon: const Icon(Icons.comment, color: Colors.black),
+                icon: Icon(Icons.comment,
+                    color: !isDarkMode(context) ? Colors.black : Colors.white),
                 onPressed: () {},
               ),
               IconButton(
-                icon: const Icon(Icons.share, color: Colors.black),
+                icon: Icon(Icons.share,
+                    color: !isDarkMode(context) ? Colors.black : Colors.white),
                 onPressed: () {},
               ),
             ],
@@ -147,8 +151,10 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                       top: 20,
                       child: Container(
                         padding: const EdgeInsets.all(2),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: !isDarkMode(context)
+                              ? Colors.white
+                              : Colors.black,
                           shape: BoxShape.circle,
                         ),
                         child: const CircleAvatar(
@@ -163,8 +169,10 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                       top: 20, // 첫 번째 CircleAvatar에 비해 오른쪽으로 이동
                       child: Container(
                         padding: const EdgeInsets.all(2),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: !isDarkMode(context)
+                              ? Colors.white
+                              : Colors.black,
                           shape: BoxShape.circle,
                         ),
                         child: const CircleAvatar(
@@ -179,8 +187,10 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                       top: 2, // 첫 번째 CircleAvatar에 비해 오른쪽으로 이동
                       child: Container(
                         padding: const EdgeInsets.all(2),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: !isDarkMode(context)
+                              ? Colors.white
+                              : Colors.black,
                           shape: BoxShape.circle,
                         ),
                         child: const CircleAvatar(
@@ -197,7 +207,7 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
               Text(
                 '${widget.post.replies} replies • ${widget.post.likes} likes',
                 style: TextStyle(
-                  color: Colors.grey[700],
+                  color: !isDarkMode(context) ? Colors.grey[700] : Colors.white,
                   fontSize: 14,
                 ),
               ),

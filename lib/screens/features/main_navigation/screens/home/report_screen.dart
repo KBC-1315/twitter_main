@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/utils.dart';
 
 class ReportScreen extends StatefulWidget {
   const ReportScreen({super.key});
@@ -35,9 +36,9 @@ class _ReportScreenState extends State<ReportScreen> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       clipBehavior: Clip.hardEdge,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: !isDarkMode(context) ? Colors.white : Colors.black,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Sizes.size14),
           topRight: Radius.circular(Sizes.size14),
         ),
@@ -49,7 +50,7 @@ class _ReportScreenState extends State<ReportScreen> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: !isDarkMode(context) ? Colors.grey[300] : Colors.black,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -74,7 +75,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 Gaps.v12,
                 Divider(
                   height: 1,
-                  color: Colors.grey.shade300,
+                  color: !isDarkMode(context) ? Colors.grey[300] : Colors.white,
                 ),
                 Gaps.v12,
                 const Text(
@@ -85,11 +86,11 @@ class _ReportScreenState extends State<ReportScreen> {
                   ),
                 ),
                 Gaps.v8,
-                const Text(
+                Text(
                   "Your report is anonymous, except if you're reporting an intellectual property infringement. If someone is in immediate danger, call the local emergency services - don't wait.",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey,
+                    color: !isDarkMode(context) ? Colors.grey : Colors.white,
                   ),
                 ),
               ],

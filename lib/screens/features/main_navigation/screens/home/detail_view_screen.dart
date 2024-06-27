@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/report_screen.dart';
+import 'package:tictok_clone/utils.dart';
 
 class DetailViewScreen extends StatefulWidget {
   const DetailViewScreen({super.key});
@@ -26,9 +27,9 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
     return Container(
       height: size.height * 0.4, // 모달의 높이를 조정
       clipBehavior: Clip.hardEdge,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: !isDarkMode(context) ? Colors.white : Colors.black,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Sizes.size14),
           topRight: Radius.circular(Sizes.size14),
         ),
@@ -41,7 +42,7 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: !isDarkMode(context) ? Colors.grey[300] : Colors.black,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -50,33 +51,39 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color: !isDarkMode(context)
+                    ? Colors.grey.shade200
+                    : Colors.black38,
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 20.0),
                     child: Text(
                       'Unfollow',
                       style: TextStyle(
                         fontSize: 18.0,
-                        color: Colors.black,
+                        color:
+                            !isDarkMode(context) ? Colors.black : Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Divider(height: 1, color: Colors.grey),
+                  Divider(
+                      height: 1,
+                      color: !isDarkMode(context) ? Colors.grey : Colors.white),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 20.0),
                     child: Text(
                       'Mute',
                       style: TextStyle(
                         fontSize: 18.0,
-                        color: Colors.black,
+                        color:
+                            !isDarkMode(context) ? Colors.black : Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -90,25 +97,29 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color:
+                    !isDarkMode(context) ? Colors.grey.shade200 : Colors.black,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 20.0),
                     child: Text(
                       'Hide',
                       style: TextStyle(
                         fontSize: 18.0,
-                        color: Colors.black,
+                        color:
+                            !isDarkMode(context) ? Colors.black : Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const Divider(height: 1, color: Colors.grey),
+                  Divider(
+                      height: 1,
+                      color: !isDarkMode(context) ? Colors.grey : Colors.white),
                   GestureDetector(
                     onTap: () => _onThreeDotTap(context),
                     child: const Padding(

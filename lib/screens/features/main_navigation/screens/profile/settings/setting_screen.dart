@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/profile/settings/privacy_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/view_models/config_vm.dart';
+import 'package:tictok_clone/utils.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -50,11 +53,6 @@ class _SettingScreenState extends State<SettingScreen> {
 
   final List<Map<String, dynamic>> _tabs = [
     {
-      "title": "Follow and invite friends",
-      "icon": FontAwesomeIcons.userPlus,
-      "onTap": () {}
-    },
-    {
       "title": "Notifications",
       "icon": FontAwesomeIcons.solidBell,
       "onTap": () {}
@@ -73,6 +71,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: !isDarkMode(context) ? Colors.white : Colors.black,
         appBar: AppBar(
           title: const Text(
             'Settings',
@@ -80,14 +79,17 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Row(
+            icon: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.arrow_back, color: Colors.black),
-                SizedBox(width: 5), // 아이콘과 텍스트 사이의 간격
+                Icon(Icons.arrow_back,
+                    color: !isDarkMode(context) ? Colors.black : Colors.white),
+                const SizedBox(width: 5), // 아이콘과 텍스트 사이의 간격
                 Text(
                   'Back',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                      color:
+                          !isDarkMode(context) ? Colors.black : Colors.white),
                 ),
               ],
             ),
@@ -96,44 +98,90 @@ class _SettingScreenState extends State<SettingScreen> {
               Navigator.pop(context);
             },
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: !isDarkMode(context) ? Colors.white : Colors.black,
           elevation: 0, // 그림자 제거
           titleSpacing: 0, // 타이틀의 위치를 조정
           leadingWidth: 100, // leading 위젯의 너비를 설정
         ),
         body: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(6),
-              bottomRight: Radius.circular(6),
+            decoration: BoxDecoration(
+              color: !isDarkMode(context) ? Colors.white : Colors.black,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(6),
+                bottomRight: Radius.circular(6),
+              ),
             ),
-          ),
-          child: Column(
-            children: _tabs.map((tab) {
-              return ListTile(
-                title: Row(
-                  children: [
-                    Gaps.h20,
-                    FaIcon(
-                      tab["icon"],
-                      color: Colors.black,
-                      size: 16,
-                    ),
-                    Gaps.h20,
-                    Text(
-                      tab["title"],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+            child: Column(
+              children: [
+                ListTile(
+                  title: Row(
+                    children: [
+                      Gaps.h16,
+                      Gaps.h2,
+                      FaIcon(
+                        !isDarkMode(context)
+                            ? FontAwesomeIcons.sun
+                            : FontAwesomeIcons.moon,
+                        color:
+                            !isDarkMode(context) ? Colors.black : Colors.white,
+                        size: 20,
                       ),
-                    ),
-                  ],
+                      Gaps.h14,
+                      Text(
+                        !isDarkMode(context) ? "Light Mode" : "Dark Mode",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: !isDarkMode(context)
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  trailing: Switch(
+                    value: context.watch<ConfigViewModel>().darked,
+                    onChanged: (value) {
+                      context.read<ConfigViewModel>().setDarked(value);
+                      setState(() {});
+                    },
+                    activeColor:
+                        !isDarkMode(context) ? Colors.black : Colors.white,
+                  ),
+                  onTap: () {
+                    bool currentMode = context.read<ConfigViewModel>().darked;
+                    context.read<ConfigViewModel>().setDarked(!currentMode);
+                    setState(() {});
+                  },
                 ),
-                onTap: () => tab["onTap"](context),
-              );
-            }).toList(),
-          ),
-        ),
+                ..._tabs.map((tab) {
+                  return ListTile(
+                    title: Row(
+                      children: [
+                        Gaps.h20,
+                        FaIcon(
+                          tab["icon"],
+                          color: !isDarkMode(context)
+                              ? Colors.black
+                              : Colors.white,
+                          size: 16,
+                        ),
+                        Gaps.h20,
+                        Text(
+                          tab["title"],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: !isDarkMode(context)
+                                ? Colors.black
+                                : Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onTap: () => tab["onTap"](context),
+                  );
+                }),
+              ],
+            )),
         bottomNavigationBar: BottomAppBar(
             child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),

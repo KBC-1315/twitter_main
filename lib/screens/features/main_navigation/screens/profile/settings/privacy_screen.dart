@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tictok_clone/utils.dart';
 
 class PrivacyScreen extends StatefulWidget {
   const PrivacyScreen({super.key});
@@ -72,14 +73,16 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Row(
+          icon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.arrow_back, color: Colors.black),
-              SizedBox(width: 5),
+              Icon(Icons.arrow_back,
+                  color: !isDarkMode(context) ? Colors.black : Colors.white),
+              const SizedBox(width: 5),
               Text(
                 'Back',
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(
+                    color: !isDarkMode(context) ? Colors.black : Colors.white),
               ),
             ],
           ),
@@ -87,13 +90,13 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: !isDarkMode(context) ? Colors.white : Colors.black,
         elevation: 0,
         titleSpacing: 0,
         leadingWidth: 100,
       ),
       body: Container(
-        color: Colors.white,
+        color: !isDarkMode(context) ? Colors.white : Colors.black,
         child: ListView(
           children: [
             // First list
@@ -105,7 +108,9 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                         ? const SizedBox.shrink()
                         : FaIcon(
                             tab["icon"],
-                            color: Colors.black,
+                            color: !isDarkMode(context)
+                                ? Colors.black
+                                : Colors.white,
                             size: 24,
                           ),
                     title: Text(
@@ -181,7 +186,9 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                         ? const SizedBox.shrink()
                         : FaIcon(
                             tab["icon"],
-                            color: Colors.black,
+                            color: !isDarkMode(context)
+                                ? Colors.black
+                                : Colors.white,
                             size: 24,
                           ),
                     title: Text(

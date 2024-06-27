@@ -7,6 +7,7 @@ import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/utils.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -76,9 +77,9 @@ class _PostScreenState extends State<PostScreen> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       clipBehavior: Clip.hardEdge,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: !isDarkMode(context) ? Colors.white : Colors.black,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Sizes.size14),
           topRight: Radius.circular(Sizes.size14),
         ),
@@ -89,19 +90,20 @@ class _PostScreenState extends State<PostScreen> {
           leadingWidth: 80,
           leading: TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
+            child: Text(
               "Cancel",
               style: TextStyle(
-                color: Colors.black,
+                color: !isDarkMode(context) ? Colors.black : Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          title: const Text(
+          title: Text(
             "New thread",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(
+                color: !isDarkMode(context) ? Colors.black : Colors.white),
           ),
-          backgroundColor: Colors.white,
+          backgroundColor: !isDarkMode(context) ? Colors.white : Colors.black,
           elevation: 0,
         ),
         body: Stack(
@@ -156,12 +158,16 @@ class _PostScreenState extends State<PostScreen> {
                                   GestureDetector(
                                     onTap: selectPhoto,
                                     child: Container(
-                                      decoration: const BoxDecoration(
-                                          color: Colors.black,
+                                      decoration: BoxDecoration(
+                                          color: !isDarkMode(context)
+                                              ? Colors.black
+                                              : Colors.white,
                                           shape: BoxShape.circle),
                                       padding: const EdgeInsets.all(5),
-                                      child: const Icon(
-                                        color: Colors.white,
+                                      child: Icon(
+                                        color: !isDarkMode(context)
+                                            ? Colors.white
+                                            : Colors.black,
                                         Icons.crop_original_sharp,
                                       ),
                                     ),
@@ -170,12 +176,16 @@ class _PostScreenState extends State<PostScreen> {
                                   GestureDetector(
                                     onTap: takePhoto,
                                     child: Container(
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors.black),
+                                          color: !isDarkMode(context)
+                                              ? Colors.black
+                                              : Colors.white),
                                       padding: const EdgeInsets.all(5),
-                                      child: const Icon(
-                                        color: Colors.white,
+                                      child: Icon(
+                                        color: !isDarkMode(context)
+                                            ? Colors.white
+                                            : Colors.black,
                                         Icons.camera_alt_outlined,
                                       ),
                                     ),
@@ -212,14 +222,19 @@ class _PostScreenState extends State<PostScreen> {
                   children: [
                     Divider(
                       height: 1,
-                      color: Colors.grey.shade300,
+                      color: !isDarkMode(context)
+                          ? Colors.grey.shade300
+                          : Colors.white,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           "Anyone can reply",
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(
+                              color: !isDarkMode(context)
+                                  ? Colors.grey
+                                  : Colors.white),
                         ),
                         TextButton(
                           onPressed: _postThread,

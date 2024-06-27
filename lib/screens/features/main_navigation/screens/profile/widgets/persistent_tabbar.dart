@@ -1,6 +1,31 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/utils.dart';
+
+class TabBarScreen extends StatefulWidget {
+  const TabBarScreen({super.key});
+
+  @override
+  _TabBarScreenState createState() => _TabBarScreenState();
+}
+
+class _TabBarScreenState extends State<TabBarScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(
+            delegate: PersistentTabBar(),
+            pinned: true,
+          ),
+          // 다른 컨텐츠 추가
+        ],
+      ),
+    );
+  }
+}
 
 class PersistentTabBar extends SliverPersistentHeaderDelegate {
   @override
@@ -14,17 +39,17 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
             width: 1,
           ),
         ),
-        color: Colors.white,
+        color: !isDarkMode(context) ? Colors.white : Colors.black,
       ),
-      child: const TabBar(
+      child: TabBar(
         indicatorSize: TabBarIndicatorSize.label,
-        labelPadding: EdgeInsets.only(
+        labelPadding: const EdgeInsets.only(
           bottom: Sizes.size20,
           top: Sizes.size20,
         ),
-        indicatorColor: Colors.black,
-        labelColor: Colors.black,
-        unselectedLabelColor: Colors.grey, // 선택되지 않은 탭의 색상 설정
+        indicatorColor: !isDarkMode(context) ? Colors.black : Colors.white,
+        labelColor: !isDarkMode(context) ? Colors.white : Colors.black,
+        unselectedLabelColor: Colors.grey,
         tabs: [
           Tab(
             child: Text(
@@ -32,6 +57,7 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+                color: !isDarkMode(context) ? Colors.black : Colors.white,
               ),
             ),
           ),
@@ -41,6 +67,7 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
+                color: !isDarkMode(context) ? Colors.black : Colors.white,
               ),
             ),
           ),
@@ -50,13 +77,13 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 60; // 탭이 충분히 보이도록 높이를 늘림
+  double get maxExtent => 60;
 
   @override
-  double get minExtent => 60; // 탭이 충분히 보이도록 높이를 늘림
+  double get minExtent => 60;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
+    return true; // 변경된 설정을 반영하기 위해 true로 설정
   }
 }
