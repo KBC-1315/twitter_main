@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone/constants/gaps.dart';
-import 'package:tictok_clone/screens/features/main_navigation/detail_view_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/text_post_widget.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/text_post_widget.dart';
 
 class ImagePostWidget extends StatefulWidget {
   final Post post;

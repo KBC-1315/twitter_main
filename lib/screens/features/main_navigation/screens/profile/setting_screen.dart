@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/constants/gaps.dart';
-import 'package:tictok_clone/screens/features/main_navigation/privacy_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/profile/settings/privacy_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});

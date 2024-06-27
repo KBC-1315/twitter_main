@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/screens/features/main_navigation/report_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/report_screen.dart';
 
 class DetailViewScreen extends StatefulWidget {
   const DetailViewScreen({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tictok_clone/constants/gaps.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/activity_tile.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/activity.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/category_button.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/activity/widgets/activity_tile.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/activity/widgets/activity.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/activity/widgets/category_button.dart';
 
 class ActivityScreen extends StatefulWidget {
   const ActivityScreen({super.key});

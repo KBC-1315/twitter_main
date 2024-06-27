@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/screens/features/main_navigation/detail_view_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/post_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/image_post_widget.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/post/post_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/image_post_widget.dart';
 import 'package:tictok_clone/screens/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tictok_clone/screens/features/main_navigation/widgets/post_video_button.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/text_post_widget.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/text_post_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

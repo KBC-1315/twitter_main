@@ -4,12 +4,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/screens/features/main_navigation/detail_view_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/post_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/setting_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/image_post_widget.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/persistent_tabbar.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/text_post_widget.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/post/post_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/profile/settings/setting_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/image_post_widget.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/profile/widgets/persistent_tabbar.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/text_post_widget.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});

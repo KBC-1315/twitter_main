@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tictok_clone/screens/features/main_navigation/activity_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/home_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/post_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/profile_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/widgets/search_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/activity/activity_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/home_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/post/post_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/profile/profile_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/search/search_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});

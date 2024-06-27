@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
-import 'package:tictok_clone/screens/features/main_navigation/detail_view_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
 
 enum PostType { text, image }
 
