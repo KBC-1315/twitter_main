@@ -1,33 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/utils.dart';
 
-class TabBarScreen extends StatefulWidget {
-  const TabBarScreen({super.key});
-
-  @override
-  _TabBarScreenState createState() => _TabBarScreenState();
-}
-
-class _TabBarScreenState extends State<TabBarScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            delegate: PersistentTabBar(),
-            pinned: true,
-          ),
-          // 다른 컨텐츠 추가
-        ],
-      ),
-    );
-  }
-}
-
 class PersistentTabBar extends SliverPersistentHeaderDelegate {
+  final WidgetRef ref;
+  final TabController tabController;
+
+  PersistentTabBar({required this.ref, required this.tabController});
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -39,25 +20,25 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
             width: 1,
           ),
         ),
-        color: !isDarkMode(context) ? Colors.white : Colors.black,
+        color: !isDarkMode(context, ref) ? Colors.white : Colors.black,
       ),
       child: TabBar(
+        controller: tabController,
         indicatorSize: TabBarIndicatorSize.label,
         labelPadding: const EdgeInsets.only(
           bottom: Sizes.size20,
           top: Sizes.size20,
         ),
-        indicatorColor: !isDarkMode(context) ? Colors.black : Colors.white,
-        labelColor: !isDarkMode(context) ? Colors.white : Colors.black,
+        indicatorColor: !isDarkMode(context, ref) ? Colors.black : Colors.white,
+        labelColor: !isDarkMode(context, ref) ? Colors.black : Colors.white,
         unselectedLabelColor: Colors.grey,
-        tabs: [
+        tabs: const [
           Tab(
             child: Text(
               "Threads",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: !isDarkMode(context) ? Colors.black : Colors.white,
               ),
             ),
           ),
@@ -67,7 +48,6 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: !isDarkMode(context) ? Colors.black : Colors.white,
               ),
             ),
           ),

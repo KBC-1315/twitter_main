@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/screens/features/main_navigation/models/config_model.dart';
 import 'package:tictok_clone/screens/features/main_navigation/repo/config_repo.dart';
 
-class ConfigViewModel extends ChangeNotifier {
-  final ConfigRepository _configRepository;
+class ConfigViewModel extends Notifier<ConfigModel> {
+  final ConfigRepository configRepository;
 
-  late final ConfigModel _configModel = ConfigModel(
-    isDark: _configRepository.isDarked(),
-  );
-
-  ConfigViewModel(this._configRepository);
-
-  bool get darked => _configModel.isDark;
+  ConfigViewModel(this.configRepository);
 
   void setDarked(bool value) {
-    _configRepository.setDark(value);
-    _configModel.isDark = value;
-    notifyListeners();
+    configRepository.setDark(value);
+    state = ConfigModel(isDark: value);
+  }
+
+  @override
+  build() {
+    return ConfigModel(isDark: configRepository.isDarked());
   }
 }
+
+final configProvider = NotifierProvider<ConfigViewModel, ConfigModel>(
+    () => throw UnimplementedError());

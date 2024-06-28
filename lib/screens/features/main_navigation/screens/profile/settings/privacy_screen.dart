@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/utils.dart';
 
-class PrivacyScreen extends StatefulWidget {
+class PrivacyScreen extends ConsumerStatefulWidget {
   const PrivacyScreen({super.key});
 
   @override
-  State<PrivacyScreen> createState() => _PrivacyScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _PrivacyScreenState();
 }
 
-class _PrivacyScreenState extends State<PrivacyScreen> {
+class _PrivacyScreenState extends ConsumerState<PrivacyScreen> {
   bool _isPrivateProfile = false;
 
   final List<Map<String, dynamic>> _tabs = [
@@ -77,12 +78,15 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.arrow_back,
-                  color: !isDarkMode(context) ? Colors.black : Colors.white),
+                  color:
+                      !isDarkMode(context, ref) ? Colors.black : Colors.white),
               const SizedBox(width: 5),
               Text(
                 'Back',
                 style: TextStyle(
-                    color: !isDarkMode(context) ? Colors.black : Colors.white),
+                    color: !isDarkMode(context, ref)
+                        ? Colors.black
+                        : Colors.white),
               ),
             ],
           ),
@@ -90,13 +94,14 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
             Navigator.pop(context);
           },
         ),
-        backgroundColor: !isDarkMode(context) ? Colors.white : Colors.black,
+        backgroundColor:
+            !isDarkMode(context, ref) ? Colors.white : Colors.black,
         elevation: 0,
         titleSpacing: 0,
         leadingWidth: 100,
       ),
       body: Container(
-        color: !isDarkMode(context) ? Colors.white : Colors.black,
+        color: !isDarkMode(context, ref) ? Colors.white : Colors.black,
         child: ListView(
           children: [
             // First list
@@ -108,7 +113,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                         ? const SizedBox.shrink()
                         : FaIcon(
                             tab["icon"],
-                            color: !isDarkMode(context)
+                            color: !isDarkMode(context, ref)
                                 ? Colors.black
                                 : Colors.white,
                             size: 24,
@@ -186,7 +191,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
                         ? const SizedBox.shrink()
                         : FaIcon(
                             tab["icon"],
-                            color: !isDarkMode(context)
+                            color: !isDarkMode(context, ref)
                                 ? Colors.black
                                 : Colors.white,
                             size: 24,

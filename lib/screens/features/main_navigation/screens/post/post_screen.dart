@@ -3,20 +3,21 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/utils.dart';
 
-class PostScreen extends StatefulWidget {
+class PostScreen extends ConsumerStatefulWidget {
   const PostScreen({super.key});
 
   @override
-  _PostScreenState createState() => _PostScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _PostScreenState();
 }
 
-class _PostScreenState extends State<PostScreen> {
+class _PostScreenState extends ConsumerState<PostScreen> {
   File? _selectedImage;
 
   Future<void> takePhoto() async {
@@ -78,7 +79,7 @@ class _PostScreenState extends State<PostScreen> {
       height: MediaQuery.of(context).size.height * 0.7,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: !isDarkMode(context) ? Colors.white : Colors.black,
+        color: !isDarkMode(context, ref) ? Colors.white : Colors.black,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Sizes.size14),
           topRight: Radius.circular(Sizes.size14),
@@ -93,7 +94,7 @@ class _PostScreenState extends State<PostScreen> {
             child: Text(
               "Cancel",
               style: TextStyle(
-                color: !isDarkMode(context) ? Colors.black : Colors.white,
+                color: !isDarkMode(context, ref) ? Colors.black : Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -101,9 +102,10 @@ class _PostScreenState extends State<PostScreen> {
           title: Text(
             "New thread",
             style: TextStyle(
-                color: !isDarkMode(context) ? Colors.black : Colors.white),
+                color: !isDarkMode(context, ref) ? Colors.black : Colors.white),
           ),
-          backgroundColor: !isDarkMode(context) ? Colors.white : Colors.black,
+          backgroundColor:
+              !isDarkMode(context, ref) ? Colors.white : Colors.black,
           elevation: 0,
         ),
         body: Stack(
@@ -159,13 +161,13 @@ class _PostScreenState extends State<PostScreen> {
                                     onTap: selectPhoto,
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color: !isDarkMode(context)
+                                          color: !isDarkMode(context, ref)
                                               ? Colors.black
                                               : Colors.white,
                                           shape: BoxShape.circle),
                                       padding: const EdgeInsets.all(5),
                                       child: Icon(
-                                        color: !isDarkMode(context)
+                                        color: !isDarkMode(context, ref)
                                             ? Colors.white
                                             : Colors.black,
                                         Icons.crop_original_sharp,
@@ -178,12 +180,12 @@ class _PostScreenState extends State<PostScreen> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: !isDarkMode(context)
+                                          color: !isDarkMode(context, ref)
                                               ? Colors.black
                                               : Colors.white),
                                       padding: const EdgeInsets.all(5),
                                       child: Icon(
-                                        color: !isDarkMode(context)
+                                        color: !isDarkMode(context, ref)
                                             ? Colors.white
                                             : Colors.black,
                                         Icons.camera_alt_outlined,
@@ -222,7 +224,7 @@ class _PostScreenState extends State<PostScreen> {
                   children: [
                     Divider(
                       height: 1,
-                      color: !isDarkMode(context)
+                      color: !isDarkMode(context, ref)
                           ? Colors.grey.shade300
                           : Colors.white,
                     ),
@@ -232,7 +234,7 @@ class _PostScreenState extends State<PostScreen> {
                         Text(
                           "Anyone can reply",
                           style: TextStyle(
-                              color: !isDarkMode(context)
+                              color: !isDarkMode(context, ref)
                                   ? Colors.grey
                                   : Colors.white),
                         ),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/utils.dart';
 
-class PostVideoButton extends StatelessWidget {
+class PostVideoButton extends ConsumerWidget {
   const PostVideoButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -49,7 +50,7 @@ class PostVideoButton extends StatelessWidget {
             horizontal: Sizes.size12,
           ),
           decoration: BoxDecoration(
-            color: !isDarkMode(context) ? Colors.white : Colors.black,
+            color: !isDarkMode(context, ref) ? Colors.white : Colors.black,
             borderRadius: BorderRadius.circular(
               Sizes.size6,
             ),
@@ -57,7 +58,7 @@ class PostVideoButton extends StatelessWidget {
           child: Center(
             child: FaIcon(
               FontAwesomeIcons.plus,
-              color: !isDarkMode(context) ? Colors.black : Colors.white,
+              color: !isDarkMode(context, ref) ? Colors.black : Colors.white,
               size: 18,
             ),
           ),

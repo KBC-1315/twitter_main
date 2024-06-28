@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/utils.dart';
 
-class NavTab extends StatelessWidget {
+class NavTab extends ConsumerWidget {
   const NavTab({
     super.key,
     required this.text,
@@ -20,12 +21,12 @@ class NavTab extends StatelessWidget {
   final Function onTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Expanded(
       child: GestureDetector(
         onTap: () => onTap(),
         child: Container(
-          color: !isDarkMode(context) ? Colors.black : Colors.white,
+          color: !isDarkMode(context, ref) ? Colors.black : Colors.white,
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 300),
             opacity: isSelected ? 1 : 0.6,
@@ -34,13 +35,15 @@ class NavTab extends StatelessWidget {
               children: [
                 FaIcon(
                   isSelected ? selectedIcon : icon,
-                  color: !isDarkMode(context) ? Colors.white : Colors.black,
+                  color:
+                      !isDarkMode(context, ref) ? Colors.white : Colors.black,
                 ),
                 Gaps.v2,
                 Text(
                   text,
                   style: TextStyle(
-                    color: !isDarkMode(context) ? Colors.white : Colors.black,
+                    color:
+                        !isDarkMode(context, ref) ? Colors.white : Colors.black,
                   ),
                 )
               ],

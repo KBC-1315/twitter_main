@@ -1,9 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/utils.dart';
 
-class CategoryButton extends StatelessWidget {
+class CategoryButton extends ConsumerWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
@@ -16,7 +17,7 @@ class CategoryButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -24,7 +25,7 @@ class CategoryButton extends StatelessWidget {
         height: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: !isDarkMode(context)
+          color: !isDarkMode(context, ref)
               ? isSelected
                   ? Colors.black
                   : Colors.white
@@ -41,7 +42,7 @@ class CategoryButton extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 15,
-            color: !isDarkMode(context)
+            color: !isDarkMode(context, ref)
                 ? isSelected
                     ? Colors.white
                     : Colors.black

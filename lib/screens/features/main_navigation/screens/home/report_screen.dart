@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/utils.dart';
 
-class ReportScreen extends StatefulWidget {
+class ReportScreen extends ConsumerStatefulWidget {
   const ReportScreen({super.key});
 
   @override
-  State<ReportScreen> createState() => _ReportScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _ReportScreenState();
 }
 
-class _ReportScreenState extends State<ReportScreen> {
+class _ReportScreenState extends ConsumerState<ReportScreen> {
   final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class _ReportScreenState extends State<ReportScreen> {
       height: MediaQuery.of(context).size.height * 0.7,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: !isDarkMode(context) ? Colors.white : Colors.black,
+        color: !isDarkMode(context, ref) ? Colors.white : Colors.black,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Sizes.size14),
           topRight: Radius.circular(Sizes.size14),
@@ -50,7 +51,8 @@ class _ReportScreenState extends State<ReportScreen> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: !isDarkMode(context) ? Colors.grey[300] : Colors.black,
+              color:
+                  !isDarkMode(context, ref) ? Colors.grey[300] : Colors.black,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -75,7 +77,9 @@ class _ReportScreenState extends State<ReportScreen> {
                 Gaps.v12,
                 Divider(
                   height: 1,
-                  color: !isDarkMode(context) ? Colors.grey[300] : Colors.white,
+                  color: !isDarkMode(context, ref)
+                      ? Colors.grey[300]
+                      : Colors.white,
                 ),
                 Gaps.v12,
                 const Text(
@@ -90,7 +94,8 @@ class _ReportScreenState extends State<ReportScreen> {
                   "Your report is anonymous, except if you're reporting an intellectual property infringement. If someone is in immediate danger, call the local emergency services - don't wait.",
                   style: TextStyle(
                     fontSize: 14,
-                    color: !isDarkMode(context) ? Colors.grey : Colors.white,
+                    color:
+                        !isDarkMode(context, ref) ? Colors.grey : Colors.white,
                   ),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/activity/activity_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/home_screen.dart';
@@ -7,14 +8,14 @@ import 'package:tictok_clone/screens/features/main_navigation/screens/profile/pr
 import 'package:tictok_clone/screens/features/main_navigation/screens/search/search_screen.dart';
 import 'package:tictok_clone/utils.dart';
 
-class MainNavigationScreen extends StatefulWidget {
+class MainNavigationScreen extends ConsumerStatefulWidget {
   const MainNavigationScreen({super.key});
 
   @override
   _MainNavigationScreenState createState() => _MainNavigationScreenState();
 }
 
-class _MainNavigationScreenState extends State<MainNavigationScreen> {
+class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
   int _selectedIndex = 0;
 
   static const List<String> _tabs = [
@@ -63,20 +64,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         showUnselectedLabels: false,
         currentIndex: _selectedIndex,
         onTap: _onTap,
-        selectedItemColor: !isDarkMode(context) ? Colors.black : Colors.white,
+        selectedItemColor:
+            !isDarkMode(context, ref) ? Colors.black : Colors.white,
         unselectedItemColor: Colors.grey,
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.home),
             label: "Home",
-            backgroundColor: !isDarkMode(context)
+            backgroundColor: !isDarkMode(context, ref)
                 ? Colors.amber[50]
                 : const Color(0xFF333300),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.search),
             label: "Search",
-            backgroundColor: !isDarkMode(context)
+            backgroundColor: !isDarkMode(context, ref)
                 ? Colors.blue[100]
                 : const Color(0xFF003366),
           ),
@@ -86,21 +88,21 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               child: const Icon(Icons.add_circle_outline),
             ),
             label: "Post",
-            backgroundColor: !isDarkMode(context)
+            backgroundColor: !isDarkMode(context, ref)
                 ? Colors.green[100]
                 : const Color(0xFF003300),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.notifications),
             label: "Notifications",
-            backgroundColor: !isDarkMode(context)
+            backgroundColor: !isDarkMode(context, ref)
                 ? Colors.purple[100]
                 : const Color(0xFF4B0082),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
             label: "Profile",
-            backgroundColor: !isDarkMode(context)
+            backgroundColor: !isDarkMode(context, ref)
                 ? Colors.lightBlue[300]
                 : const Color(0xFF003366),
           ),

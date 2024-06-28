@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/text_post_widget.dart';
 import 'package:tictok_clone/utils.dart';
 
-class ImagePostWidget extends StatefulWidget {
+class ImagePostWidget extends ConsumerStatefulWidget {
   final Post post;
 
   const ImagePostWidget({super.key, required this.post});
 
   @override
-  State<ImagePostWidget> createState() => _ImagePostWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ImagePostWidgetState();
 }
 
-class _ImagePostWidgetState extends State<ImagePostWidget> {
+class _ImagePostWidgetState extends ConsumerState<ImagePostWidget> {
   void _onThreeDotTap(BuildContext context) async {
     await showModalBottomSheet(
         isScrollControlled: false,
@@ -28,7 +30,7 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(
-          color: !isDarkMode(context) ? Colors.grey : Colors.white,
+          color: !isDarkMode(context, ref) ? Colors.grey : Colors.white,
           thickness: 1.0,
           height: 3.0,
         ),
@@ -61,12 +63,14 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                 width: 19,
                 padding: const EdgeInsets.all(0.1),
                 decoration: BoxDecoration(
-                  color: !isDarkMode(context) ? Colors.white : Colors.black,
+                  color:
+                      !isDarkMode(context, ref) ? Colors.white : Colors.black,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.add_circle,
-                  color: !isDarkMode(context) ? Colors.black : Colors.white,
+                  color:
+                      !isDarkMode(context, ref) ? Colors.black : Colors.white,
                   size: 19,
                 ),
               ),
@@ -84,7 +88,9 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: !isDarkMode(context) ? Colors.grey : Colors.white,
+                      color: !isDarkMode(context, ref)
+                          ? Colors.grey
+                          : Colors.white,
                     ),
                   ),
                   Gaps.h10,
@@ -120,17 +126,23 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
               Gaps.h24,
               IconButton(
                 icon: Icon(Icons.favorite_border,
-                    color: !isDarkMode(context) ? Colors.black : Colors.white),
+                    color: !isDarkMode(context, ref)
+                        ? Colors.black
+                        : Colors.white),
                 onPressed: () {},
               ),
               IconButton(
                 icon: Icon(Icons.comment,
-                    color: !isDarkMode(context) ? Colors.black : Colors.white),
+                    color: !isDarkMode(context, ref)
+                        ? Colors.black
+                        : Colors.white),
                 onPressed: () {},
               ),
               IconButton(
                 icon: Icon(Icons.share,
-                    color: !isDarkMode(context) ? Colors.black : Colors.white),
+                    color: !isDarkMode(context, ref)
+                        ? Colors.black
+                        : Colors.white),
                 onPressed: () {},
               ),
             ],
@@ -152,7 +164,7 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                       child: Container(
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                          color: !isDarkMode(context)
+                          color: !isDarkMode(context, ref)
                               ? Colors.white
                               : Colors.black,
                           shape: BoxShape.circle,
@@ -170,7 +182,7 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                       child: Container(
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                          color: !isDarkMode(context)
+                          color: !isDarkMode(context, ref)
                               ? Colors.white
                               : Colors.black,
                           shape: BoxShape.circle,
@@ -188,7 +200,7 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
                       child: Container(
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                          color: !isDarkMode(context)
+                          color: !isDarkMode(context, ref)
                               ? Colors.white
                               : Colors.black,
                           shape: BoxShape.circle,
@@ -207,7 +219,9 @@ class _ImagePostWidgetState extends State<ImagePostWidget> {
               Text(
                 '${widget.post.replies} replies • ${widget.post.likes} likes',
                 style: TextStyle(
-                  color: !isDarkMode(context) ? Colors.grey[700] : Colors.white,
+                  color: !isDarkMode(context, ref)
+                      ? Colors.grey[700]
+                      : Colors.white,
                   fontSize: 14,
                 ),
               ),

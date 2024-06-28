@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
@@ -28,15 +29,15 @@ class Post {
   });
 }
 
-class TextPostWidget extends StatefulWidget {
+class TextPostWidget extends ConsumerStatefulWidget {
   final Post post;
   const TextPostWidget({super.key, required this.post});
 
   @override
-  State<TextPostWidget> createState() => _TextPostWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _TextPostWidgetState();
 }
 
-class _TextPostWidgetState extends State<TextPostWidget> {
+class _TextPostWidgetState extends ConsumerState<TextPostWidget> {
   void _onThreeDotTap(BuildContext context) async {
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -51,7 +52,7 @@ class _TextPostWidgetState extends State<TextPostWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Divider(
-          color: !isDarkMode(context) ? Colors.grey : Colors.white,
+          color: !isDarkMode(context, ref) ? Colors.grey : Colors.white,
           thickness: 1.0,
           height: 3.0,
         ),
@@ -84,12 +85,14 @@ class _TextPostWidgetState extends State<TextPostWidget> {
                 width: 19,
                 padding: const EdgeInsets.all(0.1),
                 decoration: BoxDecoration(
-                  color: !isDarkMode(context) ? Colors.white : Colors.black,
+                  color:
+                      !isDarkMode(context, ref) ? Colors.white : Colors.black,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.add_circle,
-                  color: !isDarkMode(context) ? Colors.black : Colors.white,
+                  color:
+                      !isDarkMode(context, ref) ? Colors.black : Colors.white,
                   size: 19,
                 ),
               ),
@@ -107,7 +110,9 @@ class _TextPostWidgetState extends State<TextPostWidget> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
-                      color: !isDarkMode(context) ? Colors.grey : Colors.white,
+                      color: !isDarkMode(context, ref)
+                          ? Colors.grey
+                          : Colors.white,
                     ),
                   ),
                   Gaps.h10,
@@ -130,23 +135,29 @@ class _TextPostWidgetState extends State<TextPostWidget> {
                 width: 1,
                 height: 30,
                 decoration: BoxDecoration(
-                  color: !isDarkMode(context) ? Colors.grey : Colors.black,
+                  color: !isDarkMode(context, ref) ? Colors.grey : Colors.black,
                 ),
               ),
               Gaps.h24,
               IconButton(
                 icon: Icon(Icons.favorite_border,
-                    color: !isDarkMode(context) ? Colors.black : Colors.white),
+                    color: !isDarkMode(context, ref)
+                        ? Colors.black
+                        : Colors.white),
                 onPressed: () {},
               ),
               IconButton(
                 icon: Icon(Icons.comment,
-                    color: !isDarkMode(context) ? Colors.black : Colors.white),
+                    color: !isDarkMode(context, ref)
+                        ? Colors.black
+                        : Colors.white),
                 onPressed: () {},
               ),
               IconButton(
                 icon: Icon(Icons.share,
-                    color: !isDarkMode(context) ? Colors.black : Colors.white),
+                    color: !isDarkMode(context, ref)
+                        ? Colors.black
+                        : Colors.white),
                 onPressed: () {},
               ),
             ],
@@ -168,7 +179,7 @@ class _TextPostWidgetState extends State<TextPostWidget> {
                       child: Container(
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                          color: !isDarkMode(context)
+                          color: !isDarkMode(context, ref)
                               ? Colors.white
                               : Colors.black,
                           shape: BoxShape.circle,
@@ -186,7 +197,7 @@ class _TextPostWidgetState extends State<TextPostWidget> {
                       child: Container(
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                          color: !isDarkMode(context)
+                          color: !isDarkMode(context, ref)
                               ? Colors.white
                               : Colors.black,
                           shape: BoxShape.circle,
@@ -204,7 +215,7 @@ class _TextPostWidgetState extends State<TextPostWidget> {
                       child: Container(
                         padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
-                          color: !isDarkMode(context)
+                          color: !isDarkMode(context, ref)
                               ? Colors.white
                               : Colors.black,
                           shape: BoxShape.circle,
@@ -223,7 +234,9 @@ class _TextPostWidgetState extends State<TextPostWidget> {
               Text(
                 '${widget.post.replies} replies • ${widget.post.likes} likes',
                 style: TextStyle(
-                  color: !isDarkMode(context) ? Colors.grey[700] : Colors.white,
+                  color: !isDarkMode(context, ref)
+                      ? Colors.grey[700]
+                      : Colors.white,
                   fontSize: 14,
                 ),
               ),

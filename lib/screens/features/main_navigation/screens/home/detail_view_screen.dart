@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/report_screen.dart';
 import 'package:tictok_clone/utils.dart';
 
-class DetailViewScreen extends StatefulWidget {
+class DetailViewScreen extends ConsumerStatefulWidget {
   const DetailViewScreen({super.key});
 
   @override
-  State<DetailViewScreen> createState() => _DetailViewScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DetailViewScreenState();
 }
 
-class _DetailViewScreenState extends State<DetailViewScreen> {
+class _DetailViewScreenState extends ConsumerState<DetailViewScreen> {
   void _onThreeDotTap(BuildContext context) async {
     Navigator.pop(context);
     await showModalBottomSheet(
@@ -28,7 +30,7 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
       height: size.height * 0.4, // 모달의 높이를 조정
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: !isDarkMode(context) ? Colors.white : Colors.black,
+        color: !isDarkMode(context, ref) ? Colors.white : Colors.black,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(Sizes.size14),
           topRight: Radius.circular(Sizes.size14),
@@ -42,7 +44,8 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: !isDarkMode(context) ? Colors.grey[300] : Colors.black,
+              color:
+                  !isDarkMode(context, ref) ? Colors.grey[300] : Colors.black,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -51,7 +54,7 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
               decoration: BoxDecoration(
-                color: !isDarkMode(context)
+                color: !isDarkMode(context, ref)
                     ? Colors.grey.shade200
                     : Colors.black38,
                 borderRadius: BorderRadius.circular(10.0),
@@ -66,15 +69,18 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
                       'Unfollow',
                       style: TextStyle(
                         fontSize: 18.0,
-                        color:
-                            !isDarkMode(context) ? Colors.black : Colors.white,
+                        color: !isDarkMode(context, ref)
+                            ? Colors.black
+                            : Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Divider(
                       height: 1,
-                      color: !isDarkMode(context) ? Colors.grey : Colors.white),
+                      color: !isDarkMode(context, ref)
+                          ? Colors.grey
+                          : Colors.white),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 15.0, horizontal: 20.0),
@@ -82,8 +88,9 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
                       'Mute',
                       style: TextStyle(
                         fontSize: 18.0,
-                        color:
-                            !isDarkMode(context) ? Colors.black : Colors.white,
+                        color: !isDarkMode(context, ref)
+                            ? Colors.black
+                            : Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -97,8 +104,9 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
               decoration: BoxDecoration(
-                color:
-                    !isDarkMode(context) ? Colors.grey.shade200 : Colors.black,
+                color: !isDarkMode(context, ref)
+                    ? Colors.grey.shade200
+                    : Colors.black,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Column(
@@ -111,15 +119,18 @@ class _DetailViewScreenState extends State<DetailViewScreen> {
                       'Hide',
                       style: TextStyle(
                         fontSize: 18.0,
-                        color:
-                            !isDarkMode(context) ? Colors.black : Colors.white,
+                        color: !isDarkMode(context, ref)
+                            ? Colors.black
+                            : Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Divider(
                       height: 1,
-                      color: !isDarkMode(context) ? Colors.grey : Colors.white),
+                      color: !isDarkMode(context, ref)
+                          ? Colors.grey
+                          : Colors.white),
                   GestureDetector(
                     onTap: () => _onThreeDotTap(context),
                     child: const Padding(
