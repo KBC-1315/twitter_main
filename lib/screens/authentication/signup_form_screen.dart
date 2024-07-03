@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/screens/authentication/customize_screen.dart';
 import 'package:tictok_clone/screens/authentication/onboarding/verification_screen.dart';
+import 'package:tictok_clone/screens/authentication/view_models/signup_view_model.dart';
 import 'package:tictok_clone/screens/authentication/widgets/auth_button.dart';
 import 'package:tictok_clone/screens/authentication/widgets/form_button.dart';
 import 'package:tictok_clone/screens/authentication/widgets/text_span_with_link.dart';
 
 // ignore: must_be_immutable
-class SignupFormScreen extends StatefulWidget {
+class SignupFormScreen extends ConsumerStatefulWidget {
   bool? isPassed;
   String? name;
   String? contact;
@@ -19,10 +21,10 @@ class SignupFormScreen extends StatefulWidget {
       {super.key, this.isPassed, this.name, this.contact, this.birthday});
 
   @override
-  State<SignupFormScreen> createState() => _SignupFormScreenState();
+  ConsumerState<SignupFormScreen> createState() => _SignupFormScreenState();
 }
 
-class _SignupFormScreenState extends State<SignupFormScreen> {
+class _SignupFormScreenState extends ConsumerState<SignupFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Map<String, String> formData = {};
@@ -35,6 +37,7 @@ class _SignupFormScreenState extends State<SignupFormScreen> {
     widget.isPassed = true;
     if (_formKey.currentState != null) {
       if (_formKey.currentState!.validate()) {
+        ref.read(signUpForm.notifier).state = {"email": _contact};
         _formKey.currentState!.save();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => CustomizeScreen(

@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         context: context,
-        builder: (context) => const PostScreen());
+        builder: (context) => PostScreen());
   }
 
   int _selectedIndex = 0;

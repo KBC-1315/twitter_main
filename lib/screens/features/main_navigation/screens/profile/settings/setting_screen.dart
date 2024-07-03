@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/constants/gaps.dart';
+import 'package:tictok_clone/screens/authentication/repos/authentication_repository.dart';
 import 'package:tictok_clone/screens/features/main_navigation/view_models/config_vm.dart';
 import 'package:tictok_clone/utils.dart';
 
@@ -14,33 +16,28 @@ class SettingScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingScreenState extends ConsumerState<SettingScreen> {
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   void _logOut() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    // Simulate a network request
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() {
-      _isLoading = false;
-    });
-
     // Show an alert dialog
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("로그아웃 완료",
+      builder: (context) => CupertinoAlertDialog(
+        title: const Text("로그아웃하시겠습니까?",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text("확인"),
+          CupertinoDialogAction(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text("No"),
           ),
+          CupertinoDialogAction(
+            onPressed: () {
+              ref.read(authRepo).signOut();
+              context.go("/");
+            },
+            isDefaultAction: true,
+            child: const Text("yes"),
+          )
         ],
       ),
     );

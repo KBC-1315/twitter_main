@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
-import 'package:tictok_clone/screens/authentication/onboarding/finish_screen.dart';
-import 'package:tictok_clone/screens/authentication/onboarding/interest_screen.dart';
 import 'package:tictok_clone/screens/authentication/onboarding/widgets/initerst_button.dart';
-import 'package:tictok_clone/screens/features/main_navigation/main_navigation_screen.dart';
+import 'package:tictok_clone/screens/authentication/view_models/signup_view_model.dart';
 
 enum Direction { right, left }
 
@@ -72,16 +71,16 @@ const interests = [
   "Home & Garden",
 ];
 
-class InterestScreen extends StatefulWidget {
+class InterestScreen extends ConsumerStatefulWidget {
   const InterestScreen({
     super.key,
   });
 
   @override
-  State<InterestScreen> createState() => _InterestScreenState();
+  ConsumerState<InterestScreen> createState() => _InterestScreenState();
 }
 
-class _InterestScreenState extends State<InterestScreen> {
+class _InterestScreenState extends ConsumerState<InterestScreen> {
   Set<String> _selectedInterests = {};
   final Set<String> _selectedMusics = {};
   final Set<String> _selectedEntertain = {};
@@ -106,8 +105,6 @@ class _InterestScreenState extends State<InterestScreen> {
       } else {
         _selectedInterests.add(interest);
       }
-      print(_selectedInterests);
-      print("Current length : {$_selectedInterests.length}");
     });
   }
 
@@ -118,7 +115,6 @@ class _InterestScreenState extends State<InterestScreen> {
       } else {
         _selectedMusics.add(interest);
       }
-      print(_selectedMusics);
     });
   }
 
@@ -129,13 +125,11 @@ class _InterestScreenState extends State<InterestScreen> {
       } else {
         _selectedEntertain.add(interest);
       }
-      print(_selectedEntertain);
     });
   }
 
   void _onNextButtonPressed() {
     if (_selectedInterests.length >= 3) {
-      print("3보다 많아요");
       setState(() {
         _showingPage = Page.second;
         _selectedInterests = {};
@@ -144,202 +138,196 @@ class _InterestScreenState extends State<InterestScreen> {
   }
 
   void _onfinalNextButtonPressed() {
-    if ((_selectedEntertain.length + _selectedMusics.length) >= 3) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const MainNavigationScreen()),
-          (route) => false);
-    }
+    ref.read(signUpProvider.notifier).signUp(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: const FaIcon(
-            FontAwesomeIcons.twitter,
-            color: Color.fromRGBO(79, 152, 233, 1),
-          ),
-          centerTitle: true,
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
         ),
-        body: Padding(
+        title: const FaIcon(
+          FontAwesomeIcons.twitter,
+          color: Color.fromRGBO(79, 152, 233, 1),
+        ),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: Sizes.size24,
+        ),
+        child: SafeArea(
+          child: AnimatedCrossFade(
+            firstChild: Scrollbar(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: Sizes.size24,
+                    right: Sizes.size24,
+                    bottom: Sizes.size16,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 40),
+                      const Text(
+                        "What do you want to see on Twitter?",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Select at leat 3 interests to personalize your \n Twitter experience. They will be visible on \n your profile.",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      Wrap(
+                        runSpacing: 15,
+                        spacing: 15,
+                        children: [
+                          for (var interest in interests)
+                            InterestButton(
+                              interest: interest,
+                              selectedInterests:
+                                  _selectedInterests, // _selectedInterests 전달
+                              onTap: () =>
+                                  _onInterestTap(interest), // onTap 콜백 정의 및 전달
+                            ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            secondChild: Scrollbar(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: Sizes.size24,
+                    right: Sizes.size24,
+                    bottom: Sizes.size16,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 40),
+                      const Text(
+                        "What do you want to see on Twitter?",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        "Interests are used to personalize your experience and will be visible on your profile.",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      const Text(
+                        "Music",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Gaps.v20,
+                      Wrap(
+                        runSpacing: 15,
+                        spacing: 15,
+                        children: [
+                          for (var interest in musicList)
+                            InterestButton(
+                              interest: interest,
+                              selectedInterests:
+                                  _selectedMusics, // _selectedInterests 전달
+                              onTap: () =>
+                                  _onMusicTap(interest), // onTap 콜백 정의 및 전달
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 40),
+                      const Text(
+                        "Entertainment",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Gaps.v20,
+                      Wrap(
+                        runSpacing: 15,
+                        spacing: 15,
+                        children: [
+                          for (var interest in entertainList)
+                            InterestButton(
+                              interest: interest,
+                              selectedInterests:
+                                  _selectedEntertain, // _selectedInterests 전달
+                              onTap: () =>
+                                  _onEntertainTap(interest), // onTap 콜백 정의 및 전달
+                            ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            crossFadeState: _showingPage == Page.first
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            duration: const Duration(
+              milliseconds: 300,
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 1,
+        child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size24,
+            vertical: Sizes.size4,
+            horizontal: Sizes.size4,
           ),
-          child: SafeArea(
-            child: AnimatedCrossFade(
-              firstChild: Scrollbar(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: Sizes.size24,
-                      right: Sizes.size24,
-                      bottom: Sizes.size16,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 40),
-                        const Text(
-                          "What do you want to see on Twitter?",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "Select at leat 3 interests to personalize your \n Twitter experience. They will be visible on \n your profile.",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        Wrap(
-                          runSpacing: 15,
-                          spacing: 15,
-                          children: [
-                            for (var interest in interests)
-                              InterestButton(
-                                interest: interest,
-                                selectedInterests:
-                                    _selectedInterests, // _selectedInterests 전달
-                                onTap: () => _onInterestTap(
-                                    interest), // onTap 콜백 정의 및 전달
-                              ),
-                          ],
-                        )
-                      ],
-                    ),
+          child: AnimatedOpacity(
+            duration: const Duration(
+              milliseconds: 100,
+            ),
+            opacity: 1,
+            child: CupertinoButton(
+                color: (_selectedInterests.length >= 3 ||
+                        (_selectedEntertain.length + _selectedMusics.length) >=
+                            3)
+                    ? Colors.blue
+                    : Colors.grey,
+                onPressed:
+                    (_selectedEntertain.length + _selectedMusics.length) >= 3
+                        ? _onfinalNextButtonPressed
+                        : _onNextButtonPressed,
+                child: Text(
+                  ((_selectedEntertain.length + _selectedMusics.length) >= 3)
+                      ? "Submit"
+                      : "Next",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
                   ),
-                ),
-              ),
-              secondChild: Scrollbar(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: Sizes.size24,
-                      right: Sizes.size24,
-                      bottom: Sizes.size16,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 40),
-                        const Text(
-                          "What do you want to see on Twitter?",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "Interests are used to personalize your experience and will be visible on your profile.",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        const Text(
-                          "Music",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        Gaps.v20,
-                        Wrap(
-                          runSpacing: 15,
-                          spacing: 15,
-                          children: [
-                            for (var interest in musicList)
-                              InterestButton(
-                                interest: interest,
-                                selectedInterests:
-                                    _selectedMusics, // _selectedInterests 전달
-                                onTap: () =>
-                                    _onMusicTap(interest), // onTap 콜백 정의 및 전달
-                              ),
-                          ],
-                        ),
-                        const SizedBox(height: 40),
-                        const Text(
-                          "Entertainment",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        Gaps.v20,
-                        Wrap(
-                          runSpacing: 15,
-                          spacing: 15,
-                          children: [
-                            for (var interest in entertainList)
-                              InterestButton(
-                                interest: interest,
-                                selectedInterests:
-                                    _selectedEntertain, // _selectedInterests 전달
-                                onTap: () => _onEntertainTap(
-                                    interest), // onTap 콜백 정의 및 전달
-                              ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              crossFadeState: _showingPage == Page.first
-                  ? CrossFadeState.showFirst
-                  : CrossFadeState.showSecond,
-              duration: const Duration(
-                milliseconds: 300,
-              ),
-            ),
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          elevation: 1,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: Sizes.size4,
-              horizontal: Sizes.size4,
-            ),
-            child: AnimatedOpacity(
-              duration: const Duration(
-                milliseconds: 100,
-              ),
-              opacity: 1,
-              child: CupertinoButton(
-                  color: (_selectedInterests.length >= 3) ||
-                          ((_selectedEntertain.length +
-                                  _selectedMusics.length) >=
-                              3)
-                      ? Colors.blue
-                      : Colors.grey,
-                  onPressed:
-                      ((_selectedEntertain.length + _selectedMusics.length) >=
-                              3)
-                          ? _onfinalNextButtonPressed
-                          : _onNextButtonPressed,
-                  child: const Text(
-                    "Next",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  )),
-            ),
+                )),
           ),
         ),
       ),

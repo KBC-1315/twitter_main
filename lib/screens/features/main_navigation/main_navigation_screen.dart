@@ -40,7 +40,7 @@ class _MainNavigationScreenState extends ConsumerState<MainNavigationScreen> {
   void _onNewPostTap(BuildContext context) async {
     await showModalBottomSheet(
       context: context,
-      builder: (context) => const PostScreen(),
+      builder: (context) => PostScreen(),
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
     );

@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/post/view_models/upload_post_view_model.dart';
 import 'package:tictok_clone/utils.dart';
 
 class PostScreen extends ConsumerStatefulWidget {
@@ -19,6 +18,7 @@ class PostScreen extends ConsumerStatefulWidget {
 
 class _PostScreenState extends ConsumerState<PostScreen> {
   File? _selectedImage;
+  File? photo;
 
   Future<void> takePhoto() async {
     final photo = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -55,9 +55,13 @@ class _PostScreenState extends ConsumerState<PostScreen> {
   }
 
   void _postThread() {
-    _textController.clear();
+    if (_selectedImage != null) {
+      ref.read(uploadPostProvider.notifier).uploadPost(
+            File(_selectedImage!.path),
+            context,
+          );
+    }
     _focusNode.unfocus();
-    Navigator.pop(context);
   }
 
   void updateHeight() {
@@ -75,6 +79,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       clipBehavior: Clip.hardEdge,
@@ -238,16 +243,18 @@ class _PostScreenState extends ConsumerState<PostScreen> {
                                   ? Colors.grey
                                   : Colors.white),
                         ),
-                        TextButton(
-                          onPressed: _postThread,
-                          child: const Text(
-                            "Post",
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                        ref.watch(uploadPostProvider).isLoading
+                            ? const CircularProgressIndicator()
+                            : TextButton(
+                                onPressed: _postThread,
+                                child: const Text(
+                                  "Post",
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ],

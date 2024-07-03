@@ -1,20 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/screens/authentication/onboarding/interest_screen.dart';
+import 'package:tictok_clone/screens/authentication/view_models/signup_view_model.dart';
 
-class PasswordScreen extends StatefulWidget {
+class PasswordScreen extends ConsumerStatefulWidget {
   const PasswordScreen({
     super.key,
   });
 
   @override
-  State<PasswordScreen> createState() => _PasswordScreenState();
+  ConsumerState<PasswordScreen> createState() => _PasswordScreenState();
 }
 
-class _PasswordScreenState extends State<PasswordScreen> {
+class _PasswordScreenState extends ConsumerState<PasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -55,6 +57,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   void _onNextButtonPressed() {
     if (_allFieldsFilled) {
+      final state = ref.read(signUpForm.notifier).state;
+      ref.read(signUpForm.notifier).state = {
+        ...state,
+        "password": _password,
+      };
       Navigator.of(context).push(
         CupertinoPageRoute(
           builder: (context) => const InterestScreen(),

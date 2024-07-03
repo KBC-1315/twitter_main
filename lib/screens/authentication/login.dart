@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
 import 'package:tictok_clone/screens/authentication/customize_screen.dart';
+import 'package:tictok_clone/screens/authentication/login_form_screen.dart';
 import 'package:tictok_clone/screens/authentication/signup_form_screen.dart';
 import 'package:tictok_clone/screens/authentication/sign_up_screen.dart';
+import 'package:tictok_clone/screens/authentication/view_models/social_auth_view_model.dart';
 import 'package:tictok_clone/screens/authentication/widgets/auth_button.dart';
 import 'package:tictok_clone/screens/authentication/widgets/email_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/main_navigation_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/view_models/login_view_model.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
-  void _onSignupTap(BuildContext context) {
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  void onSignupTap(BuildContext context) {
     Navigator.of(context).pop();
   }
 
-  void _onEmailLoginTap(BuildContext context) {
+  void onEmailLoginTap(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const CustomizeScreen(),
+        builder: (context) => const LoginFormScreen(),
       ),
     );
   }
@@ -54,7 +64,7 @@ class LoginScreen extends StatelessWidget {
               ),
               Gaps.v40,
               GestureDetector(
-                onTap: () => _onEmailLoginTap(context),
+                onTap: () => onEmailLoginTap(context),
                 child: const AuthButton(
                   icon: FaIcon(FontAwesomeIcons.user),
                   text: "Use email & password",
@@ -63,11 +73,15 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v16,
-              const AuthButton(
-                icon: FaIcon(FontAwesomeIcons.apple),
-                text: "Continue with Apple",
-                textColor: Colors.black,
-                backgroundColor: Colors.white,
+              GestureDetector(
+                onTap: () =>
+                    ref.read(socialAuthProvider.notifier).githubSignIn(context),
+                child: const AuthButton(
+                  icon: FaIcon(FontAwesomeIcons.github),
+                  text: "Continue with Github",
+                  textColor: Colors.black,
+                  backgroundColor: Colors.white,
+                ),
               ),
             ],
           ),
@@ -87,7 +101,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Gaps.h5,
                 GestureDetector(
-                  onTap: () => _onSignupTap(context),
+                  onTap: () => onSignupTap(context),
                   child: Text(
                     "Sign up",
                     style: TextStyle(

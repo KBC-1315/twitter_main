@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/screens/authentication/view_models/signup_view_model.dart';
 import 'package:tictok_clone/screens/authentication/widgets/form_button.dart';
 import 'package:tictok_clone/screens/authentication/widgets/password_screen.dart';
 
-class EmailScreen extends StatefulWidget {
+class EmailScreen extends ConsumerStatefulWidget {
   const EmailScreen({super.key});
 
   @override
-  State<EmailScreen> createState() => _EmailScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() {
+    throw UnimplementedError();
+  }
 }
 
-class _EmailScreenState extends State<EmailScreen> {
+class _EmailScreenState extends ConsumerState<EmailScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   String _email = "";
@@ -48,6 +52,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
   void _onSubmit() {
     if (_email.isEmpty || _isEmailValid() != null) return;
+    ref.read(signUpForm.notifier).state = {"email": _email};
     Navigator.push(
       context,
       MaterialPageRoute(

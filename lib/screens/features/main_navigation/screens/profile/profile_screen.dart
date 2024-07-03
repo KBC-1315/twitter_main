@@ -38,7 +38,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen>
   }
 
   void _onSettingTap() {
-    context.push("/setting");
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SettingScreen()));
   }
 
   void _onThreeDotTap() {
@@ -54,7 +55,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen>
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         context: context,
-        builder: (context) => const PostScreen());
+        builder: (context) => PostScreen());
   }
 
   final List<Post> posts2 = [

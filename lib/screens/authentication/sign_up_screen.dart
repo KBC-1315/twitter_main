@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
@@ -7,12 +8,18 @@ import 'package:tictok_clone/screens/authentication/login.dart';
 import 'package:tictok_clone/screens/authentication/privacy_policy_screen.dart';
 import 'package:tictok_clone/screens/authentication/signup_form_screen.dart';
 import 'package:tictok_clone/screens/authentication/term_screen.dart';
+import 'package:tictok_clone/screens/authentication/view_models/social_auth_view_model.dart';
 import 'package:tictok_clone/screens/authentication/widgets/auth_button.dart';
 import 'package:tictok_clone/screens/authentication/username_screen.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
+  @override
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   void _onLoginTap(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const LoginScreen(),
@@ -86,11 +93,15 @@ class SignUpScreen extends StatelessWidget {
               ),
               Gaps.v80,
               Gaps.v40,
-              const AuthButton(
-                icon: FaIcon(FontAwesomeIcons.google, size: Sizes.size28),
-                text: "Continue with Google",
-                textColor: Colors.black,
-                backgroundColor: Colors.white,
+              GestureDetector(
+                onTap: () =>
+                    ref.read(socialAuthProvider.notifier).githubSignIn(context),
+                child: const AuthButton(
+                  icon: FaIcon(FontAwesomeIcons.github),
+                  text: "Continue with Github",
+                  textColor: Colors.black,
+                  backgroundColor: Colors.white,
+                ),
               ),
               Gaps.v16,
               const AuthButton(
