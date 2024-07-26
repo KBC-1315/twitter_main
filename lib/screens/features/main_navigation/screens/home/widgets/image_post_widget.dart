@@ -1,12 +1,13 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tictok_clone/constants/gaps.dart';
+import 'package:tictok_clone/screens/features/main_navigation/models/post_model.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
-import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/text_post_widget.dart';
 import 'package:tictok_clone/utils.dart';
 
 class ImagePostWidget extends ConsumerStatefulWidget {
-  final Post post;
+  final PostModel post;
 
   const ImagePostWidget({super.key, required this.post});
 
@@ -24,8 +25,41 @@ class _ImagePostWidgetState extends ConsumerState<ImagePostWidget> {
         builder: (context) => const DetailViewScreen());
   }
 
+  String timeAgoSinceEpoch(int millisecondsSinceEpoch) {
+    final postCreatedAt =
+        DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+    final now = DateTime.now();
+    final difference = now.difference(postCreatedAt);
+
+    if (difference.inMinutes < 1) {
+      return 'now';
+    } else if (difference.inMinutes < 10) {
+      return '${difference.inMinutes}M';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes}M';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours}h';
+    } else {
+      return '${difference.inDays}D';
+    }
+  }
+
+  Future<void> download() async {
+    try {
+      for (var post in widget.post.fileUrl) {
+        final result = await Amplify.Storage.downloadData(
+          path: StoragePath.fromString(post),
+        ).result;
+        safePrint("Download data: ${result.bytes}");
+      }
+    } on StorageException catch (e) {
+      safePrint(e.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final String timeDiff = timeAgoSinceEpoch(widget.post.createdAt);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -41,14 +75,14 @@ class _ImagePostWidgetState extends ConsumerState<ImagePostWidget> {
                 backgroundImage: AssetImage('assets/user_placeholder.png'),
               ),
               title: Text(
-                widget.post.user,
+                widget.post.creator,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               subtitle: Text(
-                widget.post.text,
+                widget.post.description,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -84,7 +118,7 @@ class _ImagePostWidgetState extends ConsumerState<ImagePostWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    widget.post.duration,
+                    timeDiff,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -108,9 +142,9 @@ class _ImagePostWidgetState extends ConsumerState<ImagePostWidget> {
           child: SizedBox(
             height: 200,
             child: PageView.builder(
-              itemCount: widget.post.images.length,
+              itemCount: widget.post.fileUrl.length,
               itemBuilder: (context, index) {
-                return Image.asset(widget.post.images[index],
+                return Image.network(widget.post.fileUrl[index],
                     fit: BoxFit.contain);
               },
             ),
@@ -217,7 +251,7 @@ class _ImagePostWidgetState extends ConsumerState<ImagePostWidget> {
               ),
               Gaps.h10,
               Text(
-                '${widget.post.replies} replies • ${widget.post.likes} likes',
+                '${widget.post.comments} replies • ${widget.post.likes} likes',
                 style: TextStyle(
                   color: !isDarkMode(context, ref)
                       ? Colors.grey[700]

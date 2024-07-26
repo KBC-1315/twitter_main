@@ -41,49 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAQDLg_c4FE5B4L0aFzCAlLUNeKeuQIhH4',
-    appId: '1:64013161717:web:efdb5154ef1771e31d21bc',
-    messagingSenderId: '64013161717',
-    projectId: 'twitter-clone-tobe1315',
-    authDomain: 'twitter-clone-tobe1315.firebaseapp.com',
-    storageBucket: 'twitter-clone-tobe1315.appspot.com',
-    measurementId: 'G-VKXXENYKK9',
+    apiKey: 'AIzaSyDtEd8Jnrf5UqAusnWw0KlSERg67x6TRVI',
+    appId: '1:202047641107:web:e4428cd6f3ff5c5c84d1e6',
+    messagingSenderId: '202047641107',
+    projectId: 'twitter-clone-tobe13155131',
+    authDomain: 'twitter-clone-tobe13155131.firebaseapp.com',
+    storageBucket: 'twitter-clone-tobe13155131.appspot.com',
+    measurementId: 'G-P6DHJME6R0',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCSH50mlNDjLSfTOHP97SVFYD6ssjvfjUs',
-    appId: '1:64013161717:android:1b1c02fcfac780491d21bc',
-    messagingSenderId: '64013161717',
-    projectId: 'twitter-clone-tobe1315',
-    storageBucket: 'twitter-clone-tobe1315.appspot.com',
+    apiKey: 'AIzaSyC_8yJYVmf8gRzSEmtC700dkSjpthVcnPs',
+    appId: '1:202047641107:android:122d50eb7428103184d1e6',
+    messagingSenderId: '202047641107',
+    projectId: 'twitter-clone-tobe13155131',
+    storageBucket: 'twitter-clone-tobe13155131.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCfPv-fr_OEBly98bFDuifCV0LXHqYA2-I',
-    appId: '1:64013161717:ios:f72759eed6c1ebe61d21bc',
-    messagingSenderId: '64013161717',
-    projectId: 'twitter-clone-tobe1315',
-    storageBucket: 'twitter-clone-tobe1315.appspot.com',
+    apiKey: 'AIzaSyAFPlTv8K_Wt_Rm3kROC9OyJa86KAzCF1U',
+    appId: '1:202047641107:ios:05359ac89c403d3e84d1e6',
+    messagingSenderId: '202047641107',
+    projectId: 'twitter-clone-tobe13155131',
+    storageBucket: 'twitter-clone-tobe13155131.appspot.com',
     iosBundleId: 'com.example.tictokClone',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCfPv-fr_OEBly98bFDuifCV0LXHqYA2-I',
-    appId: '1:64013161717:ios:f72759eed6c1ebe61d21bc',
-    messagingSenderId: '64013161717',
-    projectId: 'twitter-clone-tobe1315',
-    storageBucket: 'twitter-clone-tobe1315.appspot.com',
+    apiKey: 'AIzaSyAFPlTv8K_Wt_Rm3kROC9OyJa86KAzCF1U',
+    appId: '1:202047641107:ios:05359ac89c403d3e84d1e6',
+    messagingSenderId: '202047641107',
+    projectId: 'twitter-clone-tobe13155131',
+    storageBucket: 'twitter-clone-tobe13155131.appspot.com',
     iosBundleId: 'com.example.tictokClone',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAQDLg_c4FE5B4L0aFzCAlLUNeKeuQIhH4',
-    appId: '1:64013161717:web:ffa71a325b7f89dc1d21bc',
-    messagingSenderId: '64013161717',
-    projectId: 'twitter-clone-tobe1315',
-    authDomain: 'twitter-clone-tobe1315.firebaseapp.com',
-    storageBucket: 'twitter-clone-tobe1315.appspot.com',
-    measurementId: 'G-51EBHNGHR6',
+    apiKey: 'AIzaSyDtEd8Jnrf5UqAusnWw0KlSERg67x6TRVI',
+    appId: '1:202047641107:web:a97cf057071a466084d1e6',
+    messagingSenderId: '202047641107',
+    projectId: 'twitter-clone-tobe13155131',
+    authDomain: 'twitter-clone-tobe13155131.firebaseapp.com',
+    storageBucket: 'twitter-clone-tobe13155131.appspot.com',
+    measurementId: 'G-FC0DBZ205H',
   );
 
 }

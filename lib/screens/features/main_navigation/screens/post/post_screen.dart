@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gallery_saver/gallery_saver.dart';
@@ -17,8 +19,9 @@ class PostScreen extends ConsumerStatefulWidget {
 }
 
 class _PostScreenState extends ConsumerState<PostScreen> {
-  File? _selectedImage;
+  late List<File>? _selectedImages = [];
   File? photo;
+  late List<PlatformFile>? hiddenImage = [];
 
   Future<void> takePhoto() async {
     final photo = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -26,18 +29,28 @@ class _PostScreenState extends ConsumerState<PostScreen> {
     if (photo == null || !mounted) return;
 
     setState(() {
-      _selectedImage = File(photo.path);
+      _selectedImages = [File(photo.path)];
     });
     await GallerySaver.saveImage(photo.path);
   }
 
   Future<void> selectPhoto() async {
-    final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final photo = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      withData: false,
+      withReadStream: true,
+      allowedExtensions: ["jpg", "png", "gif"],
+      allowMultiple: true, // 여러 파일 선택
+    );
 
-    if (photo == null || !mounted) return;
-
+    if (photo == null || !mounted) {
+      safePrint("No file selected");
+      return;
+    }
+    final platformFiles = photo.files;
+    hiddenImage = platformFiles;
     setState(() {
-      _selectedImage = File(photo.path);
+      _selectedImages = platformFiles.map((file) => File(file.path!)).toList();
     });
   }
 
@@ -54,26 +67,19 @@ class _PostScreenState extends ConsumerState<PostScreen> {
     super.dispose();
   }
 
-  void _postThread() {
-    if (_selectedImage != null) {
-      ref.read(uploadPostProvider.notifier).uploadPost(
-            File(_selectedImage!.path),
-            context,
-          );
+  Future<void> _postThread() async {
+    if (_selectedImages != null) {
+      await ref
+          .read(uploadPostProvider.notifier)
+          .uploadPost(hiddenImage, context, _textController.text);
     }
     _focusNode.unfocus();
-  }
-
-  void updateHeight() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final RenderBox? renderBox =
-          _textFieldKey.currentContext?.findRenderObject() as RenderBox?;
-      if (renderBox != null) {
-        setState(() {
-          textFieldHeight = renderBox.size.height;
-        });
-      }
-    });
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("포스팅 완료!"),
+      duration: Duration(seconds: 2),
+      behavior: SnackBarBehavior.floating,
+    ));
+    Navigator.of(context).pop();
   }
 
   @override
@@ -155,9 +161,6 @@ class _PostScreenState extends ConsumerState<PostScreen> {
                                 maxLines: null, // 여러 줄 입력을 허용
                                 keyboardType: TextInputType.multiline,
                                 textInputAction: TextInputAction.newline,
-                                onChanged: (text) {
-                                  updateHeight();
-                                },
                               ),
                               Row(
                                 children: [
@@ -202,12 +205,27 @@ class _PostScreenState extends ConsumerState<PostScreen> {
                               Gaps.v28,
                               Row(
                                 children: [
-                                  if (_selectedImage != null)
-                                    Image.file(
-                                      _selectedImage!,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    ),
+                                  if (_selectedImages!.isNotEmpty)
+                                    Expanded(
+                                      child: SizedBox(
+                                          height: 300,
+                                          child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount:
+                                                  _selectedImages!.length,
+                                              itemBuilder: (context, index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 8.0),
+                                                  child: Image.file(
+                                                    _selectedImages![index],
+                                                    height: 200,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                );
+                                              })),
+                                    )
                                 ],
                               ),
                             ],

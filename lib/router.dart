@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tictok_clone/screens/authentication/login.dart';
 import 'package:tictok_clone/screens/authentication/repos/authentication_repository.dart';
 import 'package:tictok_clone/screens/authentication/sign_up_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/activity/activity_screen.dart';

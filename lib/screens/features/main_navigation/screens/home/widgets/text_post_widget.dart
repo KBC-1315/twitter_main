@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tictok_clone/constants/gaps.dart';
+import 'package:tictok_clone/screens/features/main_navigation/models/post_model.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
 import 'package:tictok_clone/utils.dart';
 
@@ -30,7 +30,7 @@ class Post {
 }
 
 class TextPostWidget extends ConsumerStatefulWidget {
-  final Post post;
+  final PostModel post;
   const TextPostWidget({super.key, required this.post});
 
   @override
@@ -38,6 +38,25 @@ class TextPostWidget extends ConsumerStatefulWidget {
 }
 
 class _TextPostWidgetState extends ConsumerState<TextPostWidget> {
+  String timeAgoSinceEpoch(int millisecondsSinceEpoch) {
+    final postCreatedAt =
+        DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch);
+    final now = DateTime.now();
+    final difference = now.difference(postCreatedAt);
+
+    if (difference.inMinutes < 1) {
+      return 'now';
+    } else if (difference.inMinutes < 10) {
+      return '${difference.inMinutes}M';
+    } else if (difference.inMinutes < 60) {
+      return '${difference.inMinutes}M';
+    } else if (difference.inHours < 24) {
+      return '${difference.inHours}h';
+    } else {
+      return '${difference.inDays}D';
+    }
+  }
+
   void _onThreeDotTap(BuildContext context) async {
     await showModalBottomSheet(
         isScrollControlled: true,
@@ -48,6 +67,7 @@ class _TextPostWidgetState extends ConsumerState<TextPostWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final String timeDiff = timeAgoSinceEpoch(widget.post.createdAt);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -63,14 +83,14 @@ class _TextPostWidgetState extends ConsumerState<TextPostWidget> {
                 backgroundImage: AssetImage('assets/user_placeholder.png'),
               ),
               title: Text(
-                widget.post.user,
+                widget.post.creator,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w800,
                 ),
               ),
               subtitle: Text(
-                widget.post.text,
+                widget.post.description,
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -106,7 +126,7 @@ class _TextPostWidgetState extends ConsumerState<TextPostWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    widget.post.duration,
+                    timeDiff,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -232,7 +252,7 @@ class _TextPostWidgetState extends ConsumerState<TextPostWidget> {
               ),
               Gaps.h10,
               Text(
-                '${widget.post.replies} replies • ${widget.post.likes} likes',
+                '${widget.post.comments} replies • ${widget.post.likes} likes',
                 style: TextStyle(
                   color: !isDarkMode(context, ref)
                       ? Colors.grey[700]

@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tictok_clone/constants/gaps.dart';
 import 'package:tictok_clone/constants/sizes.dart';
+import 'package:tictok_clone/screens/features/main_navigation/models/post_model.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/detail_view_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/post/post_screen.dart';
+import 'package:tictok_clone/screens/features/main_navigation/screens/post/view_models/fetch_post_view_model.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/profile/settings/setting_screen.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/home/widgets/image_post_widget.dart';
 import 'package:tictok_clone/screens/features/main_navigation/screens/profile/widgets/persistent_tabbar.dart';
@@ -24,11 +25,13 @@ class UserProfileScreen extends ConsumerStatefulWidget {
 class _UserProfileScreenState extends ConsumerState<UserProfileScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late Future<List<PostModel>> _postdataFuture;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _postdataFuture = getData();
   }
 
   @override
@@ -44,89 +47,25 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen>
 
   void _onThreeDotTap() {
     showModalBottomSheet(
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (context) => const DetailViewScreen());
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => const DetailViewScreen(),
+    );
   }
 
   void _onNewPostTap() {
     showModalBottomSheet(
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (context) => PostScreen());
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => const PostScreen(),
+    );
   }
 
-  final List<Post> posts2 = [
-    Post(
-        user: "Test1",
-        text: "This is a text post",
-        type: PostType.text,
-        duration: "2m"),
-    Post(
-      user: "Test3",
-      text: "Another text post",
-      type: PostType.text,
-      duration: "2h",
-    ),
-    Post(
-      user: "Test5",
-      text: "This is a text post",
-      type: PostType.text,
-    ),
-    Post(
-      user: "Test7",
-      text: "Another text post",
-      type: PostType.text,
-    ),
-  ];
-  final List<Post> posts = [
-    Post(
-        user: "Test1",
-        text: "This is a text post",
-        type: PostType.text,
-        duration: "2m"),
-    Post(
-      user: "Test2",
-      text: "Hello",
-      images: ["assets/image1.png", "assets/image2.png"],
-      type: PostType.image,
-      duration: "10m",
-    ),
-    Post(
-      user: "Test3",
-      text: "Another text post",
-      type: PostType.text,
-      duration: "2h",
-    ),
-    Post(
-      user: "Test4",
-      images: ["assets/image3.png"],
-      type: PostType.image,
-      duration: "2h",
-    ),
-    Post(
-      user: "Test5",
-      text: "This is a text post",
-      type: PostType.text,
-    ),
-    Post(
-      user: "Test6",
-      images: ["assets/image1.png", "assets/image2.png"],
-      type: PostType.image,
-    ),
-    Post(
-      user: "Test7",
-      text: "Another text post",
-      type: PostType.text,
-    ),
-    Post(
-      user: "Test8",
-      images: ["assets/image3.png"],
-      type: PostType.image,
-    ),
-  ];
+  Future<List<PostModel>> getData() async {
+    return ref.read(fetchPostProvider.future);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -387,36 +326,50 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen>
                 ),
               ];
             },
-            body: TabBarView(
-              controller: _tabController,
-              children: [
-                ListView.builder(
-                  itemCount: posts.length,
-                  itemBuilder: (context, index) {
-                    final post = posts[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
-                      child: post.type == PostType.text
-                          ? TextPostWidget(post: post)
-                          : ImagePostWidget(post: post),
-                    );
-                  },
-                ),
-                ListView.builder(
-                  itemCount: posts2.length,
-                  itemBuilder: (context, index) {
-                    final post = posts2[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
-                      child: post.type == PostType.text
-                          ? TextPostWidget(post: post)
-                          : ImagePostWidget(post: post),
-                    );
-                  },
-                ),
-              ],
+            body: FutureBuilder<List<PostModel>>(
+              future: _postdataFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No posts available'));
+                } else {
+                  final posts = snapshot.data!;
+                  return TabBarView(
+                    controller: _tabController,
+                    children: [
+                      ListView.builder(
+                        itemCount: posts.length,
+                        itemBuilder: (context, index) {
+                          final post = posts[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 16.0),
+                            child: post.postType == "text"
+                                ? TextPostWidget(post: post)
+                                : ImagePostWidget(post: post),
+                          );
+                        },
+                      ),
+                      ListView.builder(
+                        itemCount: posts.length,
+                        itemBuilder: (context, index) {
+                          final post = posts[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8.0, horizontal: 16.0),
+                            child: post.postType == "text"
+                                ? TextPostWidget(post: post)
+                                : ImagePostWidget(post: post),
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
           ),
         ),
